@@ -30,14 +30,16 @@ public class MainActivity extends AppCompatActivity {
     public void signUp(View view) {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         EditText passwordText = (EditText) findViewById(R.id.passwordText);
-        if (usernameText.getText().toString() == ""|| passwordText.getText().toString() == ""){
-           showToast("A username and password are required");
+        EditText emailText  = (EditText) findViewById(R.id.emailText);
+        if (usernameText.getText().toString() == ""|| passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
+           showToast("A username,email, and password are required");
         }
         else {
             ParseUser user = new ParseUser();
 
             user.setUsername(usernameText.getText().toString());
             user.setPassword(passwordText.getText().toString());
+            user.setEmail(emailText.getText().toString());
 
             user.signUpInBackground(new SignUpCallback() {
                 @Override
