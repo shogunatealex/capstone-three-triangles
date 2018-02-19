@@ -1,9 +1,5 @@
 package com.bamashire.capstoneapp;
 
-/**
- * Created by NateHochstetler on 2/18/18.
- */
-
 public class Habit {
 
     private String name;

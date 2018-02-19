@@ -1,7 +1,9 @@
 package com.bamashire.capstoneapp;
 
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by NateHochstetler on 2/18/18.
- */
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private List<Habit> habits;
@@ -26,6 +25,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public ViewHolder(View v) {
             super(v);
             txtName = (TextView) v.findViewById(R.id.txt_name);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("EVENT", "Clicked");
+                }
+            });
         }
     }
 

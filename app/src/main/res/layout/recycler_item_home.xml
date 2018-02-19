@@ -5,7 +5,11 @@
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="3dp"
     card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:id="@+id/card_item"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
