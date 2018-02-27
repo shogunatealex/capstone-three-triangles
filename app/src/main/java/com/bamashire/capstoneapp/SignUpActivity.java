@@ -1,37 +1,27 @@
 package com.bamashire.capstoneapp;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseAnalytics;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 public class SignUpActivity extends AppCompatActivity {
 
+
+    Activity mParent = this;
     public void signUp(View view) {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         EditText passwordText = (EditText) findViewById(R.id.passwordText);
         EditText emailText  = (EditText) findViewById(R.id.emailText);
-        if (usernameText.getText().toString() == ""|| passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
+        if (usernameText.getText().toString() == "" || passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
            showToast("A username,email, and password are required");
         }
         else {
@@ -47,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (e == null){
                         Log.i("Signup","Successful");
                         showToast("Signup Successful");
+
                     }
                     else {
                         showToast("Failed with " + e.getMessage());
@@ -54,12 +45,13 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
         }
+        ActivityUtils.showHomePage(mParent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.signup_activity);
 
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
