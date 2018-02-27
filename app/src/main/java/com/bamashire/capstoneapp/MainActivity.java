@@ -1,72 +1,70 @@
 package com.bamashire.capstoneapp;
+/*
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.app.Application;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.LogInCallback;
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.ParseAnonymousUtils;
+import com.parse.ParseACL;
+import com.parse.ParseUser;
+
+import android.app.Application;
+import android.util.Log;
+
+import com.parse.Parse;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
+import android.content.Context;
 
-public class MainActivity extends AppCompatActivity {
 
-    public void signUp(View view) {
-        EditText usernameText = (EditText) findViewById(R.id.usernameText);
-        EditText passwordText = (EditText) findViewById(R.id.passwordText);
-        EditText emailText  = (EditText) findViewById(R.id.emailText);
-        if (usernameText.getText().toString() == ""|| passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
-           showToast("A username,email, and password are required");
-        }
-        else {
-            ParseUser user = new ParseUser();
-
-            user.setUsername(usernameText.getText().toString());
-            user.setPassword(passwordText.getText().toString());
-            user.setEmail(emailText.getText().toString());
-
-            user.signUpInBackground(new SignUpCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null){
-                        Log.i("Signup","Successful");
-                        showToast("Signup Successful");
-                    }
-                    else {
-                        showToast("Failed with " + e.getMessage());
-                    }
-                }
-            });
-        }
-    }
+public class MainActivity extends Application {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onCreate() {
+        super.onCreate();
+
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+
+        // Add your initialization code here
+        Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
+                .applicationId("f4d9d4630ecb78fad451d3f1390014a52f577cc2")
+                .clientKey("6af300f5d01c48c45b865d49361f1c96f43f1c07")
+                .server("http://18.221.88.20:80/parse/")
+                .build()
+        );
+
+//        ParseObject object = new ParseObject("ExampleObject");
+//        object.put("myNumber", "123");
+//        object.put("myString", "rob");
+
+//        object.saveInBackground(new SaveCallback () {
+//            @Override
+//            public void done(ParseException ex) {
+//                if (ex == null) {
+//                    Log.i("Parse Result", "Successful!");
+//                } else {
+//                    Log.i("Parse Result", "Failed" + ex.toString());
+//                }
+//            }
+//        });
 
 
-        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+        ParseUser.enableAutomaticUser();
+
+        ParseACL defaultACL = new ParseACL();
+        defaultACL.setPublicReadAccess(true);
+        defaultACL.setPublicWriteAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
+
     }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
 }
