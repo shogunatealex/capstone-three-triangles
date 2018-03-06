@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
         EditText passwordText = (EditText) findViewById(R.id.passwordText);
         EditText emailText  = (EditText) findViewById(R.id.emailText);
         if (usernameText.getText().toString() == "" || passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
-           showToast("A username,email, and password are required");
+           showToast(getString(R.string.credentials_required));
         }
         else {
             ParseUser user = new ParseUser();
@@ -35,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseException e) {
                     if (e == null){
-                        showToast("Signup Successful");
+                        showToast(getString(R.string.signup_successful));
 
                     }
                     else {
