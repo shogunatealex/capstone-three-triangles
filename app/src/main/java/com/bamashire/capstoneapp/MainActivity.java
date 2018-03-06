@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
-import com.bamashire.capstoneapp.ActivityUtils;
 
 import com.parse.ParseAnalytics;
 
@@ -18,10 +17,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        findViewById(R.id.signUpMainButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.signupMainButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityUtils.showSignUp(mParent);
+            }
+        });
+
+        findViewById(R.id.loginMainButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.showLogin(mParent);
             }
         });
 

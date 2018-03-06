@@ -13,16 +13,16 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
     Activity mParent = this;
-    public void signUp(View view) {
+    public void signIn(View view) {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         EditText passwordText = (EditText) findViewById(R.id.passwordText);
         EditText emailText  = (EditText) findViewById(R.id.emailText);
         if (usernameText.getText().toString() == "" || passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
-           showToast(getString(R.string.credentials_required));
+           showToast("A username,email, and password are required");
         }
         else {
             ParseUser user = new ParseUser();
@@ -35,7 +35,8 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseException e) {
                     if (e == null){
-                        showToast(getString(R.string.signup_successful));
+                        Log.i("Signup","Successful");
+                        showToast("Signup Successful");
 
                     }
                     else {
@@ -50,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_activity);
+        setContentView(R.layout.login_activity);
 
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());

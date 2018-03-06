@@ -23,6 +23,10 @@ public final class ActivityUtils {
         launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, SettingsActivity.class);
     }
 
+    public static void showLogin(Activity parent) {
+        launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, LoginActivity.class);
+    }
+
     private static void launchActivityImpl(Activity parent, int requestCode, Intent intent) {
         if (requestCode == IntentConstants.REQUEST_CODE_NULL) {
             parent.startActivity(intent);
