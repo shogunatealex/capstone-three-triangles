@@ -1,5 +1,6 @@
 package com.bamashire.capstoneapp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
     private List<Habit> myDataset = new ArrayList<Habit>();
+    Activity mParent = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_manage) {
-
+            ActivityUtils.showUserSettings(mParent);
         } else if (id == R.id.nav_share) {
 
         }
