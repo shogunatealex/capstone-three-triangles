@@ -13,11 +13,11 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
     Activity mParent = this;
-    public void signUp(View view) {
+    public void signIn(View view) {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         EditText passwordText = (EditText) findViewById(R.id.passwordText);
         EditText emailText  = (EditText) findViewById(R.id.emailText);
@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseException e) {
                     if (e == null){
+                        Log.i("Signup","Successful");
                         showToast("Signup Successful");
 
                     }
@@ -50,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_activity);
+        setContentView(R.layout.login_activity);
 
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());

@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.loginMainButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.showLogin(mParent);
+            }
+        });
+
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
