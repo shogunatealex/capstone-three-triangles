@@ -21,10 +21,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtName;
+        public TextView txtConsecutiveDays;
 
         public ViewHolder(View v) {
             super(v);
             txtName = (TextView) v.findViewById(R.id.txt_name);
+            txtConsecutiveDays = (TextView) v.findViewById(R.id.txt_consecutive_days);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -59,6 +61,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         final Habit h = habits.get(position);
         holder.txtName.setText(h.getName());
+        holder.txtConsecutiveDays.setText(h.getConsecutiveDays() + " consecutive days!");
 
     }
 
