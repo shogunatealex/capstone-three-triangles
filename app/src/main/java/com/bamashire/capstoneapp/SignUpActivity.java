@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         EditText passwordText = (EditText) findViewById(R.id.passwordText);
         EditText emailText  = (EditText) findViewById(R.id.emailText);
-        if (usernameText.getText().toString() == "" || passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
+        if (usernameText.getText().toString().matches( "") || passwordText.getText().toString().matches("") || emailText.getText().toString().matches("")){
            showToast(getString(R.string.credentials_required));
         }
         else {
