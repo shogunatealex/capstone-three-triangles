@@ -27,6 +27,10 @@ public final class ActivityUtils {
         launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, LoginActivity.class);
     }
 
+    public static void showAddHabit(Activity parent) {
+        launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, AddHabitActivity.class);
+    }
+
     private static void launchActivityImpl(Activity parent, int requestCode, Intent intent) {
         if (requestCode == IntentConstants.REQUEST_CODE_NULL) {
             parent.startActivity(intent);

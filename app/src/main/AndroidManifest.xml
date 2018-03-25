@@ -37,6 +37,8 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+  
+        <activity android:name=".AddHabitActivity"></activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -46,5 +48,4 @@
                 android:value="com.bamashire.capstoneapp.HomeActivity" />
         </activity>
     </application>
-
 </manifest>
