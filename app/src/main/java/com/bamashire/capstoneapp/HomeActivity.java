@@ -50,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if(ParseUser.getCurrentUser() == null) {
             ActivityUtils.showMainPage(this);
+            return;
         }
 
         //Defining the recyclerview (list of all habits)
@@ -87,7 +88,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //Get User's Habits bellow
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
-        query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
+        if(ParseUser.getCurrentUser() == null) {
+            query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
+        }
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
 
