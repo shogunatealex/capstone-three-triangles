@@ -2,10 +2,12 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +79,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Get User's Habits bellow
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
+        query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+
+                for(ParseObject object: objects){
+                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+                    //!!!!!!!!!!!
+                    //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
+                    //!!!!!!!!!!!
+                    //!!!!!!!!!!!
+                }
+
+            }
+        });
+        //end getting user habits
+
     }
 
     @Override
