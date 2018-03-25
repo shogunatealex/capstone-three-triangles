@@ -45,7 +45,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         TextView frequency = (TextView) findViewById(R.id.habit_frequency);
 
         description.setText(habit.getDescription());
-        streak.setText(Integer.toString(habit.getConsecutiveDays()));
-        frequency.setText(Integer.toString(habit.getFrequency()));
+        streak.setText("Your current streak is " + Integer.toString(habit.getConsecutiveDays()) + " days!");
+        frequency.setText("You are expected to check in " + Integer.toString(habit.getFrequency()) + " times a day.");
     }
 }
