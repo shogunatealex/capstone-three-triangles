@@ -2,6 +2,7 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +55,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(ParseUser.getCurrentUser() == null) {
+            ActivityUtils.showMainPage(this);
+            return;
+        }
 
         //Defining the recyclerview (list of all habits)
         homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
@@ -79,6 +93,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Get User's Habits bellow
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
+        if(ParseUser.getCurrentUser() == null) {
+            query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
+        }
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+
+                for(ParseObject object: objects){
+                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+                    //!!!!!!!!!!!
+                    //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
+                    //!!!!!!!!!!!
+                    //!!!!!!!!!!!
+                }
+
+            }
+        });
+        //end getting user habits
+
     }
 
     @Override
