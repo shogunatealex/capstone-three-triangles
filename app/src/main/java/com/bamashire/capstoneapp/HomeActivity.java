@@ -38,9 +38,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //myDataset.add(new Habit(habitName));
         return;
     }
-
-
-    Activity mParent = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
