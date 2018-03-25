@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(GoogleSignInAccount account) {
-        ActivityUtils.showHomePage(this);
+        ActivityUtils.showHomePageStart(this);
     }
     
     @Override
