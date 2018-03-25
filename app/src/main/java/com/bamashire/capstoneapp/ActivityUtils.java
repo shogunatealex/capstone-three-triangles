@@ -2,13 +2,18 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.bamashire.capstoneapp.IntentConstants;
 import com.bamashire.capstoneapp.SignUpActivity;
 import com.bamashire.capstoneapp.SettingsActivity;
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 /**
@@ -40,9 +45,37 @@ public final class ActivityUtils {
         Intent intent = new Intent(parent, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("Login", account);
-        // TODO This is jerry rigged fix it. should look up how to pass intent id's
-        ParseUser.enableAutomaticUser();
-        parent.startActivity(intent);
+        if (account != null) {
+            String passwordID = account.getId();
+            String username = account.getEmail().toLowerCase().replace("@", "");
+            String email = account.getEmail().toLowerCase();
+
+            Log.d("GoogleInfo", passwordID + email + username);
+
+            ParseUser user = new ParseUser();
+
+            user.setUsername(username);
+            user.setPassword(passwordID);
+            user.setEmail(email);
+
+            user.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        parent.startActivity(intent);
+                    } else {
+                        ParseUser.logInInBackground(username, passwordID, new LogInCallback() {
+                            @Override
+                            public void done(ParseUser user, ParseException e) {
+                                if (user != null) {
+                                    parent.startActivity(intent);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
     public static void showUserSettings(Activity parent) {
@@ -57,7 +90,9 @@ public final class ActivityUtils {
         launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, AddHabitActivity.class);
     }
 
-
+    public static void showViewHabit(Activity parent) {
+        launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, ViewHabitActivity.class);
+    }
 
     private static void launchActivityImpl(Activity parent, int requestCode, Intent intent) {
         if (requestCode == IntentConstants.REQUEST_CODE_NULL) {

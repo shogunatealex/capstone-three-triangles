@@ -1,7 +1,7 @@
 <resources>
 
     <!-- /////////////////////////////////// Home Screen  /////////////////////////////////// -->
-    <string name="app_name">capStoneApp</string>
+    <string name="app_name">Three Triangles</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -86,15 +86,16 @@
 
     <!-- /////////////////////////////////// SignUp and Login  /////////////////////////////////// -->
 
-    <string name ="login">login</string>
-    <string name ="signup">signup</string>
-    <string name ="enter_username">Enter a Username</string>
-    <string name ="enter_email">Enter an Email</string>
-    <string name ="enter_password">Enter a Password</string>
-    <string name ="signup_successful">SignUp Successful</string>
-    <string name ="credentials_required">A username, email, and password are required</string>
-    <string name ="switch_login">Or, Login</string>
-    <string name ="switch_signup">Or, Sign Up</string>
-
+    <string name="login">login</string>
+    <string name="signup">signup</string>
+    <string name="enter_username">Enter a Username</string>
+    <string name="enter_email">Enter an Email</string>
+    <string name="enter_password">Enter a Password</string>
+    <string name="signup_successful">SignUp Successful</string>
+    <string name="credentials_required">A username, email, and password are required</string>
+    <string name="switch_login">Or, Login</string>
+    <string name="switch_signup">Or, Sign Up</string>
+    <string name="title_activity_view_habit">ViewHabitActivity</string>
+    <string name ="google_signin">Google Sign In</string>
 
 </resources>

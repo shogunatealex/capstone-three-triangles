@@ -106,11 +106,15 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         else {
             Intent intent = new Intent(this, HomeActivity.class);
             String habitName = editText.getText().toString();
+            Spinner freqDropdown = findViewById(R.id.FrequencySpinner);
+            String spinnerText = freqDropdown.getSelectedItem().toString();
 
             ParseObject object = new ParseObject("Habit");
             object.put("habitName", habitName);
             object.put("streak",0);
+            object.put("frequency",spinnerText);
             object.put("ownerID", ParseUser.getCurrentUser().getObjectId());
+//            object.put("perDay"),
 
             object.saveInBackground(new SaveCallback() {
                 @Override

@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword 'Capstone2018'
-            storeFile file('/Users/NateHochstetler/AndroidStudioProjects/capstone-three-triangles/key/keystore')
+            storeFile file('./key/keystore.keystore')
             storePassword 'Capstone2018'
         }
     }
