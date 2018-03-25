@@ -20,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 3951;
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
+            .requestId()
             .build();
+
 
     Activity mParent = this;
     @Override
