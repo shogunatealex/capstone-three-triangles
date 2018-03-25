@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            showToast("A username,email, and password are required");
         }
         else {
-            ParseUser.logInInBackground(usernameText.getText().toString(), passwordText.getText().toString(), new LogInCallback() {
+            ParseUser.logInInBackground(usernameText.getText().toString().toLowerCase(), passwordText.getText().toString(), new LogInCallback() {
                 @Override
                 public void done(ParseUser user, ParseException e) {
                     if (user != null){
