@@ -10,11 +10,12 @@
     tools:context="com.bamashire.capstoneapp.AddHabitActivity">
 
     <EditText
-        android:id="@+id/HabitNameText"
+        android:id="@+id/EnterHabitNameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/HabitNameText"
         android:ems="10"
         android:hint="Enter Habit Name"
         android:inputType="text" />
@@ -23,12 +24,70 @@
         android:id="@+id/addActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/HabitNameText"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="25dp"
         android:onClick="addHabit"
         android:text="Done" />
 
+    <TextView
+        android:id="@+id/CreateHabitText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Create Habit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <TextView
+        android:id="@+id/HabitNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/CreateHabitText"
+        android:layout_marginTop="38dp"
+        android:text="Habit Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:id="@+id/FrequencyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/EnterHabitNameText"
+        android:layout_marginTop="42dp"
+        android:text="Frequency"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/FrequencyText"
+        android:layout_marginTop="12dp"
+        android:text="Daily" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addActivityButton"
+        android:layout_alignStart="@+id/addActivityButton"
+        android:layout_alignTop="@+id/button2"
+        android:text="Weekly" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/button3"
+        android:text="Monthly" />
 
 
-    </RelativeLayout>
+</RelativeLayout>

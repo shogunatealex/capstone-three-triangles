@@ -6,6 +6,9 @@ import android.content.Intent;
 import com.bamashire.capstoneapp.IntentConstants;
 import com.bamashire.capstoneapp.SignUpActivity;
 import com.bamashire.capstoneapp.SettingsActivity;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
+
 /**
  * Created by Production on 2/27/2018.
  */
@@ -30,6 +33,8 @@ public final class ActivityUtils {
     public static void showAddHabit(Activity parent) {
         launchActivityImpl(parent, IntentConstants.REQUEST_CODE_NULL, AddHabitActivity.class);
     }
+
+
 
     private static void launchActivityImpl(Activity parent, int requestCode, Intent intent) {
         if (requestCode == IntentConstants.REQUEST_CODE_NULL) {

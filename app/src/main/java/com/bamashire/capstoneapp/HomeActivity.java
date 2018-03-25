@@ -15,9 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,13 +29,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
     private List<Habit> myDataset = new ArrayList<Habit>();
-    Activity mParent = this;
-
-    private void addHabit(){
-        //myDataset.add(new Habit(habitName));
-        return;
-    }
-
 
     Activity mParent = this;
     @Override
@@ -55,13 +52,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtils.showAddHabit(mParent);
-
-                Intent i = getIntent();
-                //String habitName = i.getStringExtra("habitName");
-
-                //myDataset.add(new Habit("Habit " + (myDataset.size() + 1)));
-                homeAdapter.notifyDataSetChanged();
+                Intent intent = new Intent (mParent, AddHabitActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -73,6 +66,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(data.getStringExtra(AddHabitActivity.EXTRA_MESSAGE) != null) {
+            String message = data.getStringExtra(AddHabitActivity.EXTRA_MESSAGE);
+            addNewHabit(message);
+        }
     }
 
     @Override
@@ -122,5 +133,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void addNewHabit(String habitName){
+        myDataset.add(new Habit (habitName));
+        homeAdapter.notifyDataSetChanged();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
