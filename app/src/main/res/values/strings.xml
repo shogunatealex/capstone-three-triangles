@@ -90,6 +90,8 @@
     <string name ="enter_password">Enter a Password</string>
     <string name ="signup_successful">SignUp Successful</string>
     <string name ="credentials_required">A username, email, and password are required</string>
+    <string name ="switch_login">Or, Login</string>
+    <string name ="switch_signup">Or, Sign Up</string>
 
 
 </resources>

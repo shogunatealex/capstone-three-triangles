@@ -13,17 +13,6 @@
     tools:context=".SignUpActivity">
 
     <EditText
-        android:id="@+id/passwordText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/emailText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:ems="10"
-        android:hint="@string/enter_password"
-        android:inputType="textPersonName" />
-
-    <EditText
         android:id="@+id/usernameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +25,18 @@
         android:inputType="textPersonName" />
 
     <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/emailText"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:hint="@string/enter_password"
+        android:inputType="textPassword" />
+
+    <EditText
         android:id="@+id/emailText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +46,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/enter_email"
-        android:inputType="textPersonName" />
+        android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/signUpButton"
@@ -53,8 +54,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="15dp"
         android:onClick="signUp"
         android:text="SignUp" />
+
+    <TextView
+        android:id="@+id/loginSwitchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signUpButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/switch_login"
+        android:textColor="@color/wallet_holo_blue_light" />
 
 </RelativeLayout>

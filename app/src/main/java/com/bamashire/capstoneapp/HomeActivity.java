@@ -1,6 +1,7 @@
 package com.bamashire.capstoneapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private List<Habit> myDataset = new ArrayList<Habit>();
     Activity mParent = this;
 
+    private void addHabit(){
+        //myDataset.add(new Habit(habitName));
+        return;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +52,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDataset.add(new Habit("Habit " + (myDataset.size() + 1)));
+                ActivityUtils.showAddHabit(mParent);
+
+                Intent i = getIntent();
+                //String habitName = i.getStringExtra("habitName");
+
+                //myDataset.add(new Habit("Habit " + (myDataset.size() + 1)));
                 homeAdapter.notifyDataSetChanged();
             }
         });
