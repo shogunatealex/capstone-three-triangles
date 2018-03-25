@@ -48,5 +48,4 @@
                 android:value="com.bamashire.capstoneapp.HomeActivity" />
         </activity>
     </application>
-
 </manifest>
