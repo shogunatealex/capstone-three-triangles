@@ -31,12 +31,17 @@ public class AddHabitActivity extends AppCompatActivity {
     }
 
     public void addHabit(View view) {
-        Intent intent = new Intent(this, HomeActivity.class);
         EditText editText = (EditText) findViewById(R.id.EnterHabitNameText);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        setResult(RESULT_OK, intent);
-        finish();
+        if (editText.getText().toString().matches("")){
+
+            showToast("Please enter a habit name");}
+        else {
+            Intent intent = new Intent(this, HomeActivity.class);
+            String message = editText.getText().toString();
+            intent.putExtra(EXTRA_MESSAGE, message);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     @Override
