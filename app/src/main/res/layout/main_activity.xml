@@ -23,12 +23,13 @@
         android:onClick="signUp"
         android:text="@string/signup" />
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/sign_in_google_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/loginMainButton"
         android:layout_marginBottom="22dp"
+        android:text="@string/google_signin"
         android:textAlignment="gravity" />
 
     <Button
