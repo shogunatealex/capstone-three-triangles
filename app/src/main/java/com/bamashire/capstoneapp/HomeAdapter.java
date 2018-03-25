@@ -1,6 +1,7 @@
 package com.bamashire.capstoneapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -30,10 +31,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public TextView txtConsecutiveDays;
         public TextView txtPercent;
         public RelativeLayout cardBackground;
+        public Habit habit;
 
         public ViewHolder(View v, Activity home) {
             super(v);
-            final Activity homeActivity = home;
             txtName = (TextView) v.findViewById(R.id.txt_name);
             txtConsecutiveDays = (TextView) v.findViewById(R.id.txt_consecutive_days);
             txtPercent = (TextView) v.findViewById(R.id.txt_percent_complete);
@@ -41,9 +42,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showViewHabit(homeActivity);
-                    Log.d("EVENT", "Clicked");
-
+                    Intent i = new Intent(home, ViewHabitActivity.class);
+                    i.putExtra("habit", habit);
+                    home.startActivity(i);
                 }
             });
         }
@@ -74,6 +75,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Habit h = habits.get(position);
+        holder.habit = h;
         holder.txtName.setText(h.getName());
         holder.txtConsecutiveDays.setText(h.getConsecutiveDays() + " consecutive days!");
         holder.txtPercent.setText(h.getConsecutiveDays() / 90 + "%");
