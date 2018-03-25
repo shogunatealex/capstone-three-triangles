@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.LayoutManager homeLayoutManager;
     private List<Habit> myDataset = new ArrayList<Habit>();
     Activity mParent = this;
+
 
     private void addHabit(){
         //myDataset.add(new Habit(habitName));
