@@ -45,19 +45,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         homeLayoutManager = new LinearLayoutManager(this);
         homeRecyclerView.setLayoutManager(homeLayoutManager);
 
-        homeAdapter = new HomeAdapter(myDataset);
+        homeAdapter = new HomeAdapter(myDataset, this);
         homeRecyclerView.setAdapter(homeAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtils.showAddHabit(mParent);
+//                ActivityUtils.showAddHabit(mParent);
 
-                Intent i = getIntent();
+//                Intent i = getIntent();
                 //String habitName = i.getStringExtra("habitName");
 
-                //myDataset.add(new Habit("Habit " + (myDataset.size() + 1)));
+                myDataset.add(new Habit("Habit " + (myDataset.size() + 1)));
                 homeAdapter.notifyDataSetChanged();
             }
         });
