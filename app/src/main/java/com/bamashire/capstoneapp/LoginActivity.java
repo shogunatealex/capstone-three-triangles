@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -18,34 +19,25 @@ public class LoginActivity extends AppCompatActivity {
 
     Activity mParent = this;
     public void signIn(View view) {
-        EditText usernameText = (EditText) findViewById(R.id.usernameText);
-        EditText passwordText = (EditText) findViewById(R.id.passwordText);
-        EditText emailText  = (EditText) findViewById(R.id.emailText);
-        if (usernameText.getText().toString() == "" || passwordText.getText().toString() == "" || emailText.getText().toString() == ""){
+        EditText usernameText = (EditText) findViewById(R.id.usernameLoginText);
+        EditText passwordText = (EditText) findViewById(R.id.passwordLoginText);
+        if (usernameText.getText().toString().matches("") || passwordText.getText().toString().matches("")){
            showToast("A username,email, and password are required");
         }
         else {
-            ParseUser user = new ParseUser();
-
-            user.setUsername(usernameText.getText().toString());
-            user.setPassword(passwordText.getText().toString());
-            user.setEmail(emailText.getText().toString());
-
-            user.signUpInBackground(new SignUpCallback() {
+            ParseUser.logInInBackground(usernameText.getText().toString(), passwordText.getText().toString(), new LogInCallback() {
                 @Override
-                public void done(ParseException e) {
-                    if (e == null){
-                        Log.i("Signup","Successful");
-                        showToast("Signup Successful");
-
+                public void done(ParseUser user, ParseException e) {
+                    if (user != null){
+                        showToast("Successful Login");
+                        ActivityUtils.showHomePage(mParent);
                     }
                     else {
-                        showToast("Failed with " + e.getMessage());
+                        showToast(e.getMessage());
                     }
                 }
             });
         }
-        ActivityUtils.showHomePage(mParent);
     }
 
     @Override
