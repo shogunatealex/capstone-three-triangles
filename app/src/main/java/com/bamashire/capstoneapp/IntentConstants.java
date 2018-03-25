@@ -8,4 +8,5 @@ public class IntentConstants {
 
     ///////////////// Used in com.bamashire.capstoneapp.ActivityUtils
     public static final int REQUEST_CODE_NULL = -1;
+    public static final int REQUEST_GOOGLE = 800813;
 }

@@ -63,12 +63,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        updateUI(account);
     }
 
     private void updateUI(GoogleSignInAccount account) {
-        ActivityUtils.showHomePageStart(this);
+
+        ActivityUtils.showHomePageStartGoogle(this, account);
     }
     
     @Override
