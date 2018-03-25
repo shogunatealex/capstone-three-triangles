@@ -116,6 +116,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        if(ParseUser.getCurrentUser() == null) {
+            ActivityUtils.showMainPage(this);
+            return;
+        }
     }
 
     @Override

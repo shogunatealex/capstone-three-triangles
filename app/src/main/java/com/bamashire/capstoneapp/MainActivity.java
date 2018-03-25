@@ -19,8 +19,11 @@ import com.parse.ParseAnalytics;
 public class MainActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 3951;
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("831833899474-tiaahf6huam5gf0hgk08p4e0v1v728hc.apps.googleusercontent.com")
             .requestEmail()
+            .requestId()
             .build();
+
 
     Activity mParent = this;
     @Override
