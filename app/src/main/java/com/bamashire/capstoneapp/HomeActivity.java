@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if(ParseUser.getCurrentUser() == null) {
             ActivityUtils.showMainPage(this);
             return;
