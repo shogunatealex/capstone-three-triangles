@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void done(ParseUser user, ParseException e) {
                     if (user != null){
                         showToast("Successful Login");
-                        ActivityUtils.showHomePage(mParent);
+                        ActivityUtils.showHomePageStart(mParent);
                         finish();
                     }
                     else {

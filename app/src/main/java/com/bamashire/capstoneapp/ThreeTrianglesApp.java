@@ -59,9 +59,6 @@ public class ThreeTrianglesApp extends Application {
 //            }
 //        });
 
-
-        ParseUser.enableAutomaticUser();
-
         ParseACL defaultACL = new ParseACL();
         defaultACL.setPublicReadAccess(true);
         defaultACL.setPublicWriteAccess(true);

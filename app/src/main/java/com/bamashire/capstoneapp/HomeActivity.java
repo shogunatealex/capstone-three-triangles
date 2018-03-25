@@ -23,6 +23,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -46,6 +47,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(ParseUser.getCurrentUser() == null) {
+            ActivityUtils.showMainPage(this);
+        }
 
         //Defining the recyclerview (list of all habits)
         homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
