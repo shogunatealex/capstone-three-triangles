@@ -1,9 +1,10 @@
 package com.bamashire.capstoneapp;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Habit {
+public class Habit implements Serializable {
 
     private String name;
     private String description;

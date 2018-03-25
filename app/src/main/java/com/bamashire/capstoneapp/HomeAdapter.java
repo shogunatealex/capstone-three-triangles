@@ -1,5 +1,7 @@
 package com.bamashire.capstoneapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +15,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static com.bamashire.capstoneapp.ActivityUtils.showViewHabit;
+
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private List<Habit> habits;
+    private Activity home;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -26,8 +31,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public TextView txtConsecutiveDays;
         public TextView txtPercent;
         public RelativeLayout cardBackground;
+        public Habit habit;
 
-        public ViewHolder(View v) {
+        public ViewHolder(View v, Activity home) {
             super(v);
             txtName = (TextView) v.findViewById(R.id.txt_name);
             txtConsecutiveDays = (TextView) v.findViewById(R.id.txt_consecutive_days);
@@ -36,15 +42,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("EVENT", "Clicked");
+                    Intent i = new Intent(home, ViewHabitActivity.class);
+                    i.putExtra("habit", habit);
+                    home.startActivity(i);
                 }
             });
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HomeAdapter(List<Habit> myDataset) {
+    public HomeAdapter(List<Habit> myDataset, Activity home) {
         habits = myDataset;
+        this.home = home;
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,7 +64,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         View v = inflater.inflate(R.layout.recycler_item_home, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(v, home);
 
         return vh;
     }
@@ -66,6 +75,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Habit h = habits.get(position);
+        holder.habit = h;
         holder.txtName.setText(h.getName());
         holder.txtConsecutiveDays.setText(h.getConsecutiveDays() + " consecutive days!");
         holder.txtPercent.setText(h.getConsecutiveDays() / 90 + "%");

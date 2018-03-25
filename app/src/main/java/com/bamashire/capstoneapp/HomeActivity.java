@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         homeLayoutManager = new LinearLayoutManager(this);
         homeRecyclerView.setLayoutManager(homeLayoutManager);
 
-        homeAdapter = new HomeAdapter(myDataset);
+        homeAdapter = new HomeAdapter(myDataset, this);
         homeRecyclerView.setAdapter(homeAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -131,6 +131,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         //end getting user habits
+        Habit h = new Habit ("Eating Healthier");
+        h.setDescription("The purpose of this field is to eat healthier and make it a habit through out life");
+        myDataset.add(h);
     }
 
     @Override
