@@ -55,8 +55,6 @@
         android:id="@+id/FrequencySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button4"
-        android:layout_alignRight="@+id/button4"
         android:layout_below="@+id/FrequencyText" />
 
     <TextView
