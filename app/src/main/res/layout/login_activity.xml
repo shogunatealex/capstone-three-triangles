@@ -42,8 +42,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordLoginText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="21dp"
         android:onClick="signIn"
         android:text="@string/login" />
+
+    <TextView
+        android:id="@+id/switchSignUpText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SignInButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:text="@string/switch_signup"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>
