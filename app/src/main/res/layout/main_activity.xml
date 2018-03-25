@@ -17,11 +17,19 @@
         android:id="@+id/signupMainButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/loginMainButton"
+        android:layout_above="@+id/sign_in_google_button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:onClick="signUp"
         android:text="@string/signup" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_google_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginMainButton"
+        android:layout_marginBottom="22dp"
+        android:textAlignment="gravity" />
 
     <Button
         android:id="@+id/loginMainButton"

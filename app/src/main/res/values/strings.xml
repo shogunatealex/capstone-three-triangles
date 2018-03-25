@@ -20,6 +20,9 @@
 
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
+    <string name="account_details">Account Details</string>
+    <string name="account_summary">Account Summary</string>
+
 
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
@@ -90,6 +93,8 @@
     <string name ="enter_password">Enter a Password</string>
     <string name ="signup_successful">SignUp Successful</string>
     <string name ="credentials_required">A username, email, and password are required</string>
+    <string name ="switch_login">Or, Login</string>
+    <string name ="switch_signup">Or, Sign Up</string>
 
 
 </resources>

@@ -24,6 +24,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import android.content.Context;
+import android.widget.Toast;
 
 
 public class ThreeTrianglesApp extends Application {
@@ -39,7 +40,7 @@ public class ThreeTrianglesApp extends Application {
         Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
                 .applicationId("f4d9d4630ecb78fad451d3f1390014a52f577cc2")
                 .clientKey("6af300f5d01c48c45b865d49361f1c96f43f1c07")
-                .server("http://18.221.88.20:80/parse/")
+                .server("http://18.219.221.226:80/parse/")
                 .build()
         );
 
@@ -58,13 +59,14 @@ public class ThreeTrianglesApp extends Application {
 //            }
 //        });
 
-
-        ParseUser.enableAutomaticUser();
-
         ParseACL defaultACL = new ParseACL();
         defaultACL.setPublicReadAccess(true);
         defaultACL.setPublicWriteAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
+        showToast("Database Connected");
+    }
 
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
