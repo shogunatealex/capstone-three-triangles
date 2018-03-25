@@ -47,26 +47,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EnterHabitNameText"
-        android:layout_marginTop="42dp"
-        android:text="Frequency"
+        android:layout_marginTop="36dp"
+        android:text="Frequency Per Week"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <Spinner
         android:id="@+id/FrequencySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button4"
-        android:layout_alignRight="@+id/button4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/FrequencyText" />
 
     <TextView
         android:id="@+id/TimesInAWeekText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/TimesPerWeekSpinner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="22dp"
+        android:layout_below="@+id/FrequencySpinner"
+        android:layout_marginTop="15dp"
         android:text="Times in a Week"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:visibility="invisible" />
@@ -77,9 +77,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/FrequencySpinner"
-        android:layout_marginTop="44dp"
+        android:layout_alignTop="@+id/TimesInAWeekText"
+        android:layout_marginTop="21dp"
         android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/CountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TimesPerWeekSpinner"
+        android:layout_marginTop="17dp"
+        android:text="Count"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <Spinner
+        android:id="@+id/CountSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/CountText" />
 
     <Button
         android:id="@+id/addActivityButton"
@@ -90,6 +109,19 @@
         android:layout_marginBottom="25dp"
         android:onClick="addHabit"
         android:text="Done" />
+
+    <EditText
+        android:id="@+id/CountTimesPerDayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CountSpinner"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Times Per Day"
+        android:inputType="number"
+        android:singleLine="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="visible" />
 
 
 </RelativeLayout>

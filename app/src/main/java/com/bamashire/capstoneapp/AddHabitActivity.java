@@ -44,25 +44,52 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         String[] timesPerItems = new String[]{"1", "2", "3", "4", "5", "6", "7"};
         ArrayAdapter<String> timesPerWeekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timesPerItems);
         timesPerDropdown.setAdapter(timesPerWeekAdapter);
-        timesPerDropdown.setOnItemSelectedListener(this);
+        //timesPerDropdown.setOnItemSelectedListener(this);
+
+        //Count spinner setup
+        Spinner countDropdown = findViewById(R.id.CountSpinner);
+        String[] countItems = new String[]{"Times per day", "Minutes per day"};
+        ArrayAdapter<String> countAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countItems);
+        countDropdown.setAdapter(countAdapter);
+        countDropdown.setOnItemSelectedListener(this);
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        switch (position) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                TextView textView = (TextView)findViewById(R.id.TimesInAWeekText);
-                textView.setVisibility(View.VISIBLE);
-                Spinner spin = (Spinner)findViewById(R.id.TimesPerWeekSpinner);
-                spin.setVisibility(View.VISIBLE);
-
+        switch (parent.getId()) {
+            case R.id.FrequencySpinner:
+                TextView FStextView = (TextView) findViewById(R.id.CountTimesPerDayText);
+                switch (position) {
+                    case 0:
+                        FStextView.setHint("Times Per Day");
+                        break;
+                    case 1:
+                        FStextView.setHint("Minutes Per Day");
+                        break;
+                }
+            case R.id.CountSpinner:
+                TextView textView = (TextView) findViewById(R.id.TimesInAWeekText);
+                Spinner spin = (Spinner) findViewById(R.id.TimesPerWeekSpinner);
+                switch (position) {
+                    case 0:
+                        textView.setVisibility(View.INVISIBLE);
+                        spin.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        textView.setVisibility(View.INVISIBLE);
+                        spin.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        textView.setVisibility(View.INVISIBLE);
+                        spin.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        textView.setVisibility(View.INVISIBLE);
+                        spin.setVisibility(View.INVISIBLE);
+                        break;
+                    case 4:
+                        textView.setVisibility(View.VISIBLE);
+                        spin.setVisibility(View.VISIBLE);
+                }
         }
     }
 
