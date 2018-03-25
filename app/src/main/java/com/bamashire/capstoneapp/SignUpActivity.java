@@ -36,7 +36,6 @@ public class SignUpActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                     if (e == null){
                         showToast(getString(R.string.signup_successful));
-
                     }
                     else {
                         showToast("Failed with " + e.getMessage());
@@ -44,7 +43,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
         }
-        ActivityUtils.showHomePage(mParent);
     }
 
     @Override
