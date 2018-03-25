@@ -91,25 +91,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Get User's Habits bellow
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
-        if(ParseUser.getCurrentUser() == null) {
-            query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
-        }
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objects, ParseException e) {
-
-                for(ParseObject object: objects){
-                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
-                    //!!!!!!!!!!!
-                    //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
-                    //!!!!!!!!!!!
-                    //!!!!!!!!!!!
-                }
-
-            }
-        });
-        //end getting user habits
+        getHabitsFromDb();
 
     }
 
@@ -125,10 +107,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(data.getStringExtra(AddHabitActivity.EXTRA_MESSAGE) != null) {
-            String message = data.getStringExtra(AddHabitActivity.EXTRA_MESSAGE);
-            addNewHabit(message);
-        }
+            getHabitsFromDb();
+    }
+
+    private void getHabitsFromDb(){
+        //Get User's Habits bellow
+        myDataset.clear();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
+        query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+
+                for(ParseObject object: objects){
+                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+                    addNewHabit(object.getString("habitName"));
+                    //!!!!!!!!!!!
+                    //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
+                    //!!!!!!!!!!!
+                    //!!!!!!!!!!!
+                }
+
+            }
+        });
+        //end getting user habits
     }
 
     @Override
@@ -193,7 +194,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public void addNewHabit(String habitName){
         myDataset.add(new Habit (habitName));
-        homeAdapter.notifyDataSetChanged();}
+        homeAdapter.notifyDataSetChanged();
+    }
 
     private static final int RC_ACHIEVEMENT_UI = 9003;
 
