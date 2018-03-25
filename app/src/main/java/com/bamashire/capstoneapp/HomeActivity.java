@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(ParseUser.getCurrentUser() == null) {
+            ActivityUtils.showMainPage(this);
+        }
 
         //Defining the recyclerview (list of all habits)
         homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
