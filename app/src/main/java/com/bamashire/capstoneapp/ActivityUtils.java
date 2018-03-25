@@ -6,8 +6,10 @@ import android.content.Intent;
 import com.bamashire.capstoneapp.IntentConstants;
 import com.bamashire.capstoneapp.SignUpActivity;
 import com.bamashire.capstoneapp.SettingsActivity;
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.parse.ParseUser;
+
 
 /**
  * Created by Production on 2/27/2018.
