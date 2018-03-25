@@ -25,6 +25,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
     private List<Habit> myDataset = new ArrayList<Habit>();
+    Activity mParent = this;
 
     private void addHabit(){
         //myDataset.add(new Habit(habitName));
@@ -113,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_manage) {
-
+            ActivityUtils.showUserSettings(mParent);
         } else if (id == R.id.nav_share) {
 
         }
