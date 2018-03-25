@@ -44,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 public void done(ParseException e) {
                     if (e == null){
                         showToast(getString(R.string.signup_successful));
-                        ActivityUtils.showHomePage(mParent);
+                        ActivityUtils.showHomePageStart(mParent);
                         finish();
                     }
                     else {
