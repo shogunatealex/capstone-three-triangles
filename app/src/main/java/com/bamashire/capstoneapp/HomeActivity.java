@@ -2,11 +2,14 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -42,10 +45,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView homeRecyclerView;
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
-<<<<<<< HEAD
     private List<ParseObject> myDataset = new ArrayList<ParseObject>();
-=======
->>>>>>> ViewHabit
+    private HomeSwipeController swipeController;
+    private ItemTouchHelper itemTouchhelper;
     Activity mParent = this;
 
 
@@ -66,15 +68,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
 
-        //Defining the recyclerview (list of all habits)
-        homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
-        homeRecyclerView.setHasFixedSize(true);
-
-        homeLayoutManager = new LinearLayoutManager(this);
-        homeRecyclerView.setLayoutManager(homeLayoutManager);
-
-        homeAdapter = new HomeAdapter(myDataset, this);
-        homeRecyclerView.setAdapter(homeAdapter);
+        initRecyclerView();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -162,9 +156,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-<<<<<<< HEAD
-=======
->>>>>>> ViewHabit
     }
 
     @Override
@@ -240,7 +231,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static final int RC_ACHIEVEMENT_UI = 9003;
 
-    private void showAchievements() {;//TODO: THIS SHOULD BE IN ACTIVITYUTILS
+    private void showAchievements() {
+        //TODO: THIS SHOULD BE IN ACTIVITYUTILS
         final Task<Intent> intentTask = Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .getAchievementsIntent()
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
