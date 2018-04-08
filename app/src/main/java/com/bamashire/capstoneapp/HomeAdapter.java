@@ -47,7 +47,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(home, ViewHabitActivity.class);
-                    i.putExtra("myhabit", habit.getString("objectId"));
+                    i.putExtra("myhabit", habit.getObjectId());
                     home.startActivity(i);
 
                 }
@@ -80,6 +80,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final ParseObject h = habits.get(position);
+        Log.d("TEST", Integer.toString(position));
         holder.habit = h;
         holder.txtName.setText(h.getString("habitName"));
         holder.txtConsecutiveDays.setText(h.getString("streak") + " consecutive days!");
