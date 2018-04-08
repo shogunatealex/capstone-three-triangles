@@ -49,8 +49,8 @@ public class ViewHabitActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-//                Snackbar.make(view, "You have checked in with " + habit.getName(), Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,8 +64,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
                 }
-                populateData();
                 setTitle(habit.getString("habitName"));
+                populateData();
             }
         });
 
@@ -103,7 +103,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         description.setText(habit.getString("description"));
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
-        frequency.setText("You are expected to check in " + habit.getString("frequency") + " times a day.");
+        frequency.setText("You are expected to check in " + habit.getString("frequency"));
     }
 
     private void lineGraph() {
