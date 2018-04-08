@@ -42,7 +42,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView homeRecyclerView;
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
+<<<<<<< HEAD
     private List<ParseObject> myDataset = new ArrayList<ParseObject>();
+=======
+>>>>>>> ViewHabit
     Activity mParent = this;
 
 
@@ -96,6 +99,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void initRecyclerView() {
+        //Defining the recyclerview (list of all habits)
+        homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
+
+        homeLayoutManager = new LinearLayoutManager(this);
+        homeRecyclerView.setLayoutManager(homeLayoutManager);
+
+        homeAdapter = new HomeAdapter(myDataset, this);
+        homeRecyclerView.setAdapter(homeAdapter);
+
+        swipeController = new HomeSwipeController(new HomeSwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position, View view) {
+                Snackbar.make(view, "You have checked in ", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(homeRecyclerView);
+
+        homeRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -130,6 +162,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+<<<<<<< HEAD
+=======
+>>>>>>> ViewHabit
     }
 
     @Override
@@ -185,6 +220,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+        else if (id == R.id.nav_sign_out){
+            ParseUser.logOut();
+            ActivityUtils.showMainPage(this);
+            finish();
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -199,7 +240,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static final int RC_ACHIEVEMENT_UI = 9003;
 
-    private void showAchievements() {
+    private void showAchievements() {;//TODO: THIS SHOULD BE IN ACTIVITYUTILS
         final Task<Intent> intentTask = Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .getAchievementsIntent()
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {

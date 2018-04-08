@@ -82,6 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         final ParseObject h = habits.get(position);
         Log.d("TEST", Integer.toString(position));
         holder.habit = h;
+<<<<<<< HEAD
         holder.txtName.setText(h.getString("habitName"));
         holder.txtConsecutiveDays.setText(h.getString("streak") + " consecutive days!");
         holder.txtPercent.setText(h.getString("streak"));
@@ -99,6 +100,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Log.d("DPI" + position + " AFTER", Float.toString(dpi));
         Log.d("CALC" + position + " AFTER", Float.toString(dpi * density));
         Log.d("WIDTH" + position + " AFTER", Integer.toString( holder.cardBackground.getLayoutParams().width));
+=======
+>>>>>>> ViewHabit
 
     }
 

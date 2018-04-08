@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -18,6 +19,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
+=======
+>>>>>>> ViewHabit
 
 public class ViewHabitActivity extends AppCompatActivity {
 
@@ -57,6 +60,9 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
+=======
+>>>>>>> ViewHabit
     }
 
     private void populateData() {
