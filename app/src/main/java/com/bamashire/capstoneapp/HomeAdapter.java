@@ -2,6 +2,7 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +14,16 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
+
+import java.io.Serializable;
 import java.util.List;
 
 import static com.bamashire.capstoneapp.ActivityUtils.showViewHabit;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    private List<Habit> habits;
+    private List<ParseObject> habits;
     private Activity home;
 
     // Provide a reference to the views for each data item
@@ -31,7 +35,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public TextView txtConsecutiveDays;
         public TextView txtPercent;
         public RelativeLayout cardBackground;
-        public Habit habit;
+        public ParseObject habit;
 
         public ViewHolder(View v, Activity home) {
             super(v);
@@ -43,15 +47,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(home, ViewHabitActivity.class);
-                    i.putExtra("habit", habit);
+                    ParseObjectWrapper h = new ParseObjectWrapper(habit);
+                    i.putExtra("habit", (Serializable) h);
                     home.startActivity(i);
+
                 }
             });
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HomeAdapter(List<Habit> myDataset, Activity home) {
+    public HomeAdapter(List<ParseObject> myDataset, Activity home) {
         habits = myDataset;
         this.home = home;
     }
@@ -74,11 +80,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Habit h = habits.get(position);
+        final ParseObject h = habits.get(position);
         holder.habit = h;
-        holder.txtName.setText(h.getName());
-        holder.txtConsecutiveDays.setText(h.getConsecutiveDays() + " consecutive days!");
-        holder.txtPercent.setText(h.getConsecutiveDays() / 90 + "%");
+        holder.txtName.setText(h.getString("habitName"));
+        holder.txtConsecutiveDays.setText(h.getString("streak") + " consecutive days!");
+        holder.txtPercent.setText(h.getString("streak"));
 
         float density = holder.cardBackground.getContext().getResources().getDisplayMetrics().density;
         float dpi = holder.cardBackground.getContext().getResources().getDisplayMetrics().densityDpi;

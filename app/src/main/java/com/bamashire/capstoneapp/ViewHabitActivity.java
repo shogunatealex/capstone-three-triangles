@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
+
 public class ViewHabitActivity extends AppCompatActivity {
 
-    private Habit habit;
+    private ParseObject habit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,9 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        habit = (Habit) getIntent().getSerializableExtra("habit");
+        habit = ((ParseObjectWrapper) getIntent().getSerializableExtra("habit")).getObject();
 
-        setTitle(habit.getName());
+        setTitle(habit.getString("habitName"));
 
         populateData();
     }
@@ -44,8 +46,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         TextView streak = (TextView) findViewById(R.id.habit_streak);
         TextView frequency = (TextView) findViewById(R.id.habit_frequency);
 
-        description.setText(habit.getDescription());
-        streak.setText("Your current streak is " + Integer.toString(habit.getConsecutiveDays()) + " days!");
-        frequency.setText("You are expected to check in " + Integer.toString(habit.getFrequency()) + " times a day.");
+        description.setText(habit.getString("description"));
+        streak.setText("Your current streak is " + habit.getString("streak") + " days!");
+        frequency.setText("You are expected to check in " + habit.getString("frequency") + " times a day.");
     }
 }
