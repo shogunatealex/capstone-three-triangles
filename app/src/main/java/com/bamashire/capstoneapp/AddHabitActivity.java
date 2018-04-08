@@ -30,6 +30,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Create Habit");
         setContentView(R.layout.activity_add_habit);
 
         //Frequency spinner setup
@@ -44,7 +45,6 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         String[] timesPerItems = new String[]{"1", "2", "3", "4", "5", "6", "7"};
         ArrayAdapter<String> timesPerWeekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timesPerItems);
         timesPerDropdown.setAdapter(timesPerWeekAdapter);
-        //timesPerDropdown.setOnItemSelectedListener(this);
 
         //Count spinner setup
         Spinner countDropdown = findViewById(R.id.CountSpinner);
@@ -55,18 +55,6 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        switch (parent.getId()) {
-            case R.id.FrequencySpinner:
-                TextView FStextView = (TextView) findViewById(R.id.CountTimesPerDayText);
-                switch (position) {
-                    case 0:
-                        FStextView.setHint("Times Per Day");
-                        break;
-                    case 1:
-                        FStextView.setHint("Minutes Per Day");
-                        break;
-                }
-            case R.id.CountSpinner:
                 TextView textView = (TextView) findViewById(R.id.TimesInAWeekText);
                 Spinner spin = (Spinner) findViewById(R.id.TimesPerWeekSpinner);
                 switch (position) {
@@ -90,7 +78,6 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                         textView.setVisibility(View.VISIBLE);
                         spin.setVisibility(View.VISIBLE);
                 }
-        }
     }
 
     private void showToast(String message) {
