@@ -2,11 +2,14 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -43,6 +46,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
     private List<Habit> myDataset = new ArrayList<Habit>();
+    private HomeSwipeController swipeController;
+    private ItemTouchHelper itemTouchhelper;
     Activity mParent = this;
 
 
@@ -63,15 +68,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
 
-        //Defining the recyclerview (list of all habits)
-        homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
-        homeRecyclerView.setHasFixedSize(true);
-
-        homeLayoutManager = new LinearLayoutManager(this);
-        homeRecyclerView.setLayoutManager(homeLayoutManager);
-
-        homeAdapter = new HomeAdapter(myDataset, this);
-        homeRecyclerView.setAdapter(homeAdapter);
+        initRecyclerView();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +91,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         getHabitsFromDb();
 
+    }
+
+    private void initRecyclerView() {
+        //Defining the recyclerview (list of all habits)
+        homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
+
+        homeLayoutManager = new LinearLayoutManager(this);
+        homeRecyclerView.setLayoutManager(homeLayoutManager);
+
+        homeAdapter = new HomeAdapter(myDataset, this);
+        homeRecyclerView.setAdapter(homeAdapter);
+
+        swipeController = new HomeSwipeController(new HomeSwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position, View view) {
+                Snackbar.make(view, "You have checked in ", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(homeRecyclerView);
+
+        homeRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 
     @Override
@@ -131,9 +157,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         //end getting user habits
-        Habit h = new Habit ("Eating Healthier");
-        h.setDescription("The purpose of this field is to eat healthier and make it a habit through out life");
-        myDataset.add(h);
+//        Habit h = new Habit ("Eating Healthier");
+//        h.setDescription("The purpose of this field is to eat healthier and make it a habit through out life");
+//        myDataset.add(h);
+
     }
 
     @Override
@@ -189,6 +216,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+        else if (id == R.id.nav_sign_out){
+            ParseUser.logOut();
+            ActivityUtils.showMainPage(this);
+            finish();
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -203,7 +236,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static final int RC_ACHIEVEMENT_UI = 9003;
 
-    private void showAchievements() {
+    private void showAchievements() {;//TODO: THIS SHOULD BE IN ACTIVITYUTILS
         final Task<Intent> intentTask = Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .getAchievementsIntent()
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
