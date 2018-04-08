@@ -157,9 +157,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         //end getting user habits
-        Habit h = new Habit ("Eating Healthier");
-        h.setDescription("The purpose of this field is to eat healthier and make it a habit through out life");
-        myDataset.add(h);
+//        Habit h = new Habit ("Eating Healthier");
+//        h.setDescription("The purpose of this field is to eat healthier and make it a habit through out life");
+//        myDataset.add(h);
 
     }
 
@@ -216,6 +216,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+        else if (id == R.id.nav_sign_out){
+            ParseUser.logOut();
+            ActivityUtils.showMainPage(this);
+            finish();
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -230,7 +236,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static final int RC_ACHIEVEMENT_UI = 9003;
 
-    private void showAchievements() {
+    private void showAchievements() {;//TODO: THIS SHOULD BE IN ACTIVITYUTILS
         final Task<Intent> intentTask = Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .getAchievementsIntent()
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
