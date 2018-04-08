@@ -14,6 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
 import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
 import com.db.chart.model.LineSet;
@@ -25,7 +32,8 @@ import com.db.chart.view.LineChartView;
 
 public class ViewHabitActivity extends AppCompatActivity {
 
-    private Habit habit;
+    private String habitID;
+    private ParseObject habit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +47,34 @@ public class ViewHabitActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                Snackbar.make(view, "You have checked in with " + habit.getName(), Snackbar.LENGTH_LONG)
+                habit.increment("streak");
+                habit.saveInBackground();
+                callApi();
+                Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        habit = (Habit) getIntent().getSerializableExtra("habit");
 
-        setTitle(habit.getName());
+       callApi();
 
-        populateData();
         lineGraph();
         barChart();
+    }
+    public void callApi(){
+        habitID = getIntent().getStringExtra("myhabit");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
+        query.whereEqualTo("objectId", habitID);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+                for(ParseObject object: objects){
+                    habit = object;
+                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+                }
+                setTitle(habit.getString("habitName"));
+                populateData();
+            }
+        });
     }
 
     @Override
@@ -83,9 +105,9 @@ public class ViewHabitActivity extends AppCompatActivity {
         TextView streak = (TextView) findViewById(R.id.habit_streak);
         TextView frequency = (TextView) findViewById(R.id.habit_frequency);
 
-        description.setText(habit.getDescription());
-        streak.setText("Your current streak is " + Integer.toString(habit.getConsecutiveDays()) + " days!");
-        frequency.setText("You are expected to check in " + Integer.toString(habit.getFrequency()) + " times a day.");
+        description.setText(habit.getString("description"));
+        streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
+        frequency.setText("You are expected to check in " + habit.getString("frequency"));
     }
 
     private void lineGraph() {

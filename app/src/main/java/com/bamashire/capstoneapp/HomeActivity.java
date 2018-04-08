@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView homeRecyclerView;
     private RecyclerView.Adapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
-    private List<Habit> myDataset = new ArrayList<Habit>();
+    private List<ParseObject> myDataset = new ArrayList<ParseObject>();
     private HomeSwipeController swipeController;
     private ItemTouchHelper itemTouchhelper;
     Activity mParent = this;
@@ -147,7 +147,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 for(ParseObject object: objects){
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
-                    addNewHabit(object.getString("habitName"));
+                    addNewHabit(object);
                     //!!!!!!!!!!!
                     //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
                     //!!!!!!!!!!!
@@ -156,11 +156,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-        //end getting user habits
-//        Habit h = new Habit ("Eating Healthier");
-//        h.setDescription("The purpose of this field is to eat healthier and make it a habit through out life");
-//        myDataset.add(h);
-
     }
 
     @Override
@@ -229,14 +224,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void addNewHabit(String habitName){
-        myDataset.add(new Habit (habitName));
+    public void addNewHabit(ParseObject habit){
+        myDataset.add(habit);
         homeAdapter.notifyDataSetChanged();
     }
 
     private static final int RC_ACHIEVEMENT_UI = 9003;
 
-    private void showAchievements() {;//TODO: THIS SHOULD BE IN ACTIVITYUTILS
+    private void showAchievements() {
+        //TODO: THIS SHOULD BE IN ACTIVITYUTILS
         final Task<Intent> intentTask = Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .getAchievementsIntent()
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {

@@ -2,6 +2,7 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +14,16 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
+
+import java.io.Serializable;
 import java.util.List;
 
 import static com.bamashire.capstoneapp.ActivityUtils.showViewHabit;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    private List<Habit> habits;
+    private List<ParseObject> habits;
     private Activity home;
 
     // Provide a reference to the views for each data item
@@ -31,7 +35,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public TextView txtConsecutiveDays;
         public TextView txtPercent;
         public RelativeLayout cardBackground;
-        public Habit habit;
+        public ParseObject habit;
 
         public ViewHolder(View v, Activity home) {
             super(v);
@@ -43,15 +47,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(home, ViewHabitActivity.class);
-                    i.putExtra("habit", habit);
+                    i.putExtra("myhabit", habit.getObjectId());
                     home.startActivity(i);
+
                 }
             });
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HomeAdapter(List<Habit> myDataset, Activity home) {
+    public HomeAdapter(List<ParseObject> myDataset, Activity home) {
         habits = myDataset;
         this.home = home;
     }
@@ -74,22 +79,37 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Habit h = habits.get(position);
+        final ParseObject h = habits.get(position);
+        Log.d("TEST", Integer.toString(position));
         holder.habit = h;
-        holder.txtName.setText(h.getName());
-        holder.txtConsecutiveDays.setText(h.getConsecutiveDays() + " consecutive days!");
-        holder.txtPercent.setText(String.format("%,.0f%%", h.getConsecutiveDays() / .90));
+        holder.txtName.setText(h.getString("habitName"));
+        holder.txtConsecutiveDays.setText(h.getString("streak") + " consecutive days!");
+        holder.txtPercent.setText(h.getString("streak"));
 
-        holder.itemView.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("WIDTH" , Integer.toString(holder.itemView.getWidth()));
-                Log.d("DAYS" , Integer.toString(h.getConsecutiveDays()));
-                Log.d("CALC" , Double.toString(holder.itemView.getWidth() * (h.getConsecutiveDays() / 90.0)));
-                holder.cardBackground.getLayoutParams().width = (int) (holder.itemView.getWidth() * (h.getConsecutiveDays() / 90.0));
-            }
-        });
+        float density = holder.cardBackground.getContext().getResources().getDisplayMetrics().density;
+        float dpi = holder.cardBackground.getContext().getResources().getDisplayMetrics().densityDpi;
+        Log.d("DENSITY" + position + " BEFORE", Float.toString(density));
+        Log.d("DPI" + position + " BEFORE", Float.toString(dpi));
+        Log.d("CALC" + position + " BEFORE", Float.toString(dpi * density));
+        Log.d("WIDTH" + position + " BEFORE", Integer.toString( holder.cardBackground.getLayoutParams().width));
+//        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, holder.cardBackground.getResources().getDisplayMetrics());
+//        holder.cardBackground.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 410, holder.cardBackground.getResources().getDisplayMetrics());
+        holder.cardBackground.getLayoutParams().width = 1000;
+        Log.d("DENSITY" + position + " AFTER", Float.toString(density));
+        Log.d("DPI" + position + " AFTER", Float.toString(dpi));
+        Log.d("CALC" + position + " AFTER", Float.toString(dpi * density));
+        Log.d("WIDTH" + position + " AFTER", Integer.toString( holder.cardBackground.getLayoutParams().width));
 
+
+//        holder.itemView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.d("WIDTH" , Integer.toString(holder.itemView.getWidth()));
+//                Log.d("DAYS" , Integer.toString(h.getConsecutiveDays()));
+//                Log.d("CALC" , Double.toString(holder.itemView.getWidth() * (h.getConsecutiveDays() / 90.0)));
+//                holder.cardBackground.getLayoutParams().width = (int) (holder.itemView.getWidth() * (h.getConsecutiveDays() / 90.0));
+//            }
+//        });
 
     }
 
