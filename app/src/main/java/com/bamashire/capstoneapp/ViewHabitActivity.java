@@ -39,6 +39,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Snackbar.make(view, "You have checked in with " + habit.getName(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
