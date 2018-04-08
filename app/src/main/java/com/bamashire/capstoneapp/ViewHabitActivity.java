@@ -15,7 +15,7 @@ import com.parse.ParseObject;
 
 public class ViewHabitActivity extends AppCompatActivity {
 
-    private ParseObject habit;
+    private String habitID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,10 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        habit = ((ParseObjectWrapper) getIntent().getSerializableExtra("habit")).getObject();
 
-        setTitle(habit.getString("habitName"));
+        habitID = getIntent().getStringExtra("myHabit");
+
+        setTitle(habitID);
 
         populateData();
     }
@@ -45,9 +46,9 @@ public class ViewHabitActivity extends AppCompatActivity {
         TextView description = (TextView) findViewById(R.id.habit_description);
         TextView streak = (TextView) findViewById(R.id.habit_streak);
         TextView frequency = (TextView) findViewById(R.id.habit_frequency);
-
-        description.setText(habit.getString("description"));
-        streak.setText("Your current streak is " + habit.getString("streak") + " days!");
-        frequency.setText("You are expected to check in " + habit.getString("frequency") + " times a day.");
+//
+//        description.setText(habit.getString("description"));
+//        streak.setText("Your current streak is " + habit.getString("streak") + " days!");
+//        frequency.setText("You are expected to check in " + habit.getString("frequency") + " times a day.");
     }
 }

@@ -47,8 +47,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(home, ViewHabitActivity.class);
-                    ParseObjectWrapper h = new ParseObjectWrapper(habit);
-                    i.putExtra("habit", (Serializable) h);
+                    i.putExtra("myhabit", habit.getString("objectId"));
                     home.startActivity(i);
 
                 }
