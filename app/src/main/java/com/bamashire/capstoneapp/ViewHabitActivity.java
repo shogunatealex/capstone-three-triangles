@@ -47,14 +47,21 @@ public class ViewHabitActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                habit.increment("streak");
+                habit.saveInBackground();
+                callApi();
                 Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+       callApi();
+
+        lineGraph();
+        barChart();
+    }
+    public void callApi(){
         habitID = getIntent().getStringExtra("myhabit");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
         query.whereEqualTo("objectId", habitID);
@@ -68,9 +75,6 @@ public class ViewHabitActivity extends AppCompatActivity {
                 populateData();
             }
         });
-
-        lineGraph();
-        barChart();
     }
 
     @Override
