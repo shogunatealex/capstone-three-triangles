@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +131,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        
+
+        View hView =  navigationView.getHeaderView(0);
+
+        TextView drawerName = (TextView) hView.findViewById(R.id.drawer_name);
+        TextView drawerEmail = (TextView) hView.findViewById(R.id.drawer_email);
+
+        drawerName.setText(ParseUser.getCurrentUser().getUsername());
+        drawerEmail.setText(ParseUser.getCurrentUser().getEmail());
+
     }
 
     //closes FAB submenus
