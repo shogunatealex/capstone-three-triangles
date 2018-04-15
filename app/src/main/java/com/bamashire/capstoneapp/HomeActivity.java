@@ -22,14 +22,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -37,8 +36,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,6 +47,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ItemTouchHelper itemTouchhelper;
     Activity mParent = this;
 
+    private boolean fabExpanded = false;
+    private FloatingActionButton fabSettings;
+    private LinearLayout layoutFabCustom;
+    private LinearLayout layoutFabPremade;
 
     private void addHabit(){
         //myDataset.add(new Habit(habitName));
@@ -70,8 +71,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         initRecyclerView();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fabSettings = (FloatingActionButton) this.findViewById(R.id.fabAddHabit);
+        layoutFabCustom = (LinearLayout) this.findViewById(R.id.layoutFabCustom);
+        layoutFabPremade = (LinearLayout) this.findViewById(R.id.layoutFabPremade);
+
+        fabSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fabExpanded == true){
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
+                }
+            }
+        });
+
+        layoutFabCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (mParent, AddHabitActivity.class);
@@ -79,6 +96,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivityForResult(intent, 1);
             }
         });
+
+        layoutFabPremade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (mParent, PreMadeHabitActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        //Only main FAB is visible in the beginning
+        closeSubMenusFab();
+
+
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent (mParent, AddHabitActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                startActivityForResult(intent, 1);
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -91,6 +130,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         getHabitsFromDb();
 
+    }
+
+    //closes FAB submenus
+    private void closeSubMenusFab(){
+        layoutFabCustom.setVisibility(View.INVISIBLE);
+        layoutFabPremade.setVisibility(View.INVISIBLE);
+        fabSettings.setImageResource(R.drawable.ic_fab_plus);
+        fabExpanded = false;
+    }
+
+    //Opens FAB submenus
+    private void openSubMenusFab() {
+        layoutFabCustom.setVisibility(View.VISIBLE);
+        layoutFabPremade.setVisibility(View.VISIBLE);
+        //Change settings icon to 'X' icon
+        fabSettings.setImageResource(R.drawable.ic_clear);
+        fabExpanded = true;
     }
 
     private void initRecyclerView() {
