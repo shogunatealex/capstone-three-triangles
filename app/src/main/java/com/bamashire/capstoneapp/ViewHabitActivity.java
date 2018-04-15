@@ -57,7 +57,7 @@ public class ViewHabitActivity extends AppCompatActivity {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String formattedDate = df.format(c.getTime());
 
-                if (dates == null) {
+                if (dates == null || dates.size() == 0) {
                     habit.increment("streak");
                     habit.add("history", formattedDate);
                     Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
