@@ -50,7 +50,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     i.putExtra("myhabit", habit.getObjectId());
                     i.putExtra("habitName",habit.getString("habitName"));
                     home.startActivity(i);
-
                 }
             });
         }
@@ -71,7 +70,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v, home);
-
         return vh;
     }
 
@@ -81,36 +79,21 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final ParseObject h = habits.get(position);
+        int streak = (Integer) h.get("streak");
         Log.d("TEST", Integer.toString(position));
         holder.habit = h;
         holder.txtName.setText(h.getString("habitName"));
-        holder.txtConsecutiveDays.setText(h.get("streak") + " consecutive days!");
-        holder.txtPercent.setText(h.getString("streak"));
-
-        float density = holder.cardBackground.getContext().getResources().getDisplayMetrics().density;
-        float dpi = holder.cardBackground.getContext().getResources().getDisplayMetrics().densityDpi;
-        Log.d("DENSITY" + position + " BEFORE", Float.toString(density));
-        Log.d("DPI" + position + " BEFORE", Float.toString(dpi));
-        Log.d("CALC" + position + " BEFORE", Float.toString(dpi * density));
-        Log.d("WIDTH" + position + " BEFORE", Integer.toString( holder.cardBackground.getLayoutParams().width));
-//        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, holder.cardBackground.getResources().getDisplayMetrics());
-//        holder.cardBackground.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 410, holder.cardBackground.getResources().getDisplayMetrics());
-        holder.cardBackground.getLayoutParams().width = 1000;
-        Log.d("DENSITY" + position + " AFTER", Float.toString(density));
-        Log.d("DPI" + position + " AFTER", Float.toString(dpi));
-        Log.d("CALC" + position + " AFTER", Float.toString(dpi * density));
-        Log.d("WIDTH" + position + " AFTER", Integer.toString( holder.cardBackground.getLayoutParams().width));
-
-
-//        holder.itemView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.d("WIDTH" , Integer.toString(holder.itemView.getWidth()));
-//                Log.d("DAYS" , Integer.toString(h.getConsecutiveDays()));
-//                Log.d("CALC" , Double.toString(holder.itemView.getWidth() * (h.getConsecutiveDays() / 90.0)));
-//                holder.cardBackground.getLayoutParams().width = (int) (holder.itemView.getWidth() * (h.getConsecutiveDays() / 90.0));
-//            }
-//        });
+        holder.txtConsecutiveDays.setText(streak + " consecutive days!");
+        holder.txtPercent.setText(String.format("%,.0f%%", streak / .9));
+        
+        holder.itemView.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("WIDTH" , Integer.toString(holder.itemView.getWidth()));
+                Log.d("DAYS" , Integer.toString(streak));
+                Log.d("CALC" , Integer.toString((int) (holder.itemView.getWidth() * (streak / 90.0))));
+            }
+        });
 
     }
 
