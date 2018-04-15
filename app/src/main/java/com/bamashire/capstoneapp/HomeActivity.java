@@ -127,9 +127,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        getHabitsFromDb();
-
+        
     }
 
     //closes FAB submenus
@@ -181,6 +179,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        getHabitsFromDb();
     }
 
     @Override
@@ -188,10 +187,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-            getHabitsFromDb();
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+//            getHabitsFromDb();
+//    }
 
     private void getHabitsFromDb(){
         //Get User's Habits bellow

@@ -130,7 +130,8 @@ public class ViewHabitActivity extends AppCompatActivity {
             Log.d("S", "Edit CLICKED");
             return true;
         } else if (id == R.id.action_delete) {
-            Log.d("S", "Delete CLICKED");
+            habit.deleteInBackground();
+            finish();
             return true;
         }
 
