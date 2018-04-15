@@ -34,9 +34,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
+        android:id="@+id/three_triangles_view"
         layout="@layout/content_view_habit"
-        android:layout_height="439dp"
-        tools:layout_editor_absoluteY="224dp" />
+        android:layout_height="250dp"
+        tools:layout_editor_absoluteY="2dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

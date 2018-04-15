@@ -1,6 +1,7 @@
 package com.bamashire.capstoneapp;
 
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -29,6 +31,8 @@ import com.db.chart.renderer.YRenderer;
 import com.db.chart.tooltip.Tooltip;
 import com.db.chart.view.BarChartView;
 import com.db.chart.view.LineChartView;
+
+import static java.lang.Thread.sleep;
 
 public class ViewHabitActivity extends AppCompatActivity {
 
@@ -53,6 +57,16 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        ImageView ThreeTriangleButtons = (findViewById(R.id.three_triangles_image));
+        int resId;
+        int i = 50;
+        String packageName = getPackageName();
+        resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        ThreeTriangleButtons.setImageResource(resId);
+
+
 
         habitID = getIntent().getStringExtra("myhabit");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");

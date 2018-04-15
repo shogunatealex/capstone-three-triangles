@@ -15,7 +15,7 @@
         android:paddingTop="25dp">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/three_triangles_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/triangle1" />
