@@ -1,8 +1,11 @@
 package com.bamashire.capstoneapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 //public static final String EXTRA_MESSAGE = "premade_habit";
 public class PreMadeHabitActivity extends AppCompatActivity  {
@@ -13,6 +16,14 @@ public class PreMadeHabitActivity extends AppCompatActivity  {
         setContentView(R.layout.premade_habit);
     }
 
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void preMadeHabit(View view) {
+        Intent intent = new Intent(this, AddHabitActivity.class);
+        finish();
+    }
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
