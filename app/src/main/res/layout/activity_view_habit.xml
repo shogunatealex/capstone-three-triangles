@@ -35,7 +35,7 @@
 
     <include
         layout="@layout/content_view_habit"
-        android:layout_height="505dp"
+        android:layout_height="439dp"
         tools:layout_editor_absoluteY="224dp" />
 
     <android.support.design.widget.FloatingActionButton
