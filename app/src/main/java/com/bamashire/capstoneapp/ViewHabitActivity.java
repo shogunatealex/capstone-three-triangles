@@ -3,6 +3,7 @@ package com.bamashire.capstoneapp;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -86,12 +87,12 @@ public class ViewHabitActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView ThreeTriangleButtons = (findViewById(R.id.three_triangles_image));
+        CollapsingToolbarLayout ThreeTriangleButtons = (findViewById(R.id.toolbar_layout));
         int resId;
         int i = 50;
         String packageName = getPackageName();
         resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
-        ThreeTriangleButtons.setImageResource(resId);
+        ThreeTriangleButtons.setBackgroundResource(resId);
         lineGraph();
         barChart();
     }
