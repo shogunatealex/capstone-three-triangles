@@ -20,6 +20,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
@@ -47,16 +52,35 @@ public class ViewHabitActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                habit.increment("streak");
+                ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = df.format(c.getTime());
+
+                if (dates == null) {
+                    habit.increment("streak");
+                    habit.add("history", formattedDate);
+                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
+                    Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    habit.increment("streak");
+                    habit.add("history", formattedDate);
+                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
                 habit.saveInBackground();
+
                 callApi();
-                Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       callApi();
+        callApi();
 
         lineGraph();
         barChart();
@@ -71,8 +95,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
                 }
-                setTitle(habit.getString("habitName"));
                 populateData();
+                setTitle(habit.getString("habitName"));
             }
         });
     }
