@@ -42,10 +42,13 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(getIntent().getStringExtra("habitName"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        callApi();
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -80,8 +83,6 @@ public class ViewHabitActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        callApi();
-
         lineGraph();
         barChart();
     }
@@ -96,7 +97,6 @@ public class ViewHabitActivity extends AppCompatActivity {
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
                 }
                 populateData();
-                setTitle(habit.getString("habitName"));
             }
         });
     }
