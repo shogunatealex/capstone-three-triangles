@@ -22,6 +22,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
@@ -41,23 +46,45 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(getIntent().getStringExtra("habitName"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        callApi();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = df.format(c.getTime());
 
+                if (dates == null || dates.size() == 0) {
+                    habit.increment("streak");
+                    habit.add("history", formattedDate);
+                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
+                    Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    habit.increment("streak");
+                    habit.add("history", formattedDate);
+                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
 
-//                Snackbar.make(view, "You have checked in with " + habit.getName(), Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                habit.saveInBackground();
+
+                callApi();
+
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         ImageView ThreeTriangleButtons = (findViewById(R.id.three_triangles_image));
         int resId;
@@ -65,8 +92,10 @@ public class ViewHabitActivity extends AppCompatActivity {
         String packageName = getPackageName();
         resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
         ThreeTriangleButtons.setImageResource(resId);
-
-
+        lineGraph();
+        barChart();
+    }
+    public void callApi(){
 
         habitID = getIntent().getStringExtra("myhabit");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
@@ -78,12 +107,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
                 }
                 populateData();
-                setTitle(habit.getString("habitName"));
             }
         });
-
-        lineGraph();
-        barChart();
     }
 
     @Override
@@ -116,7 +141,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         description.setText(habit.getString("description"));
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
-        frequency.setText("You are expected to check in " + habit.getString("frequency") + " times a day.");
+        frequency.setText("You are expected to check in " + habit.getString("frequency"));
     }
 
     private void lineGraph() {

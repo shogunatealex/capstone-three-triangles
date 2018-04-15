@@ -40,6 +40,9 @@
             android:name=".AddHabitActivity"
             android:parentActivityName=".HomeActivity"></activity>
         <activity
+            android:name=".PreMadeHabitActivity"
+            android:parentActivityName=".HomeActivity"></activity>
+        <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".HomeActivity">
             <meta-data

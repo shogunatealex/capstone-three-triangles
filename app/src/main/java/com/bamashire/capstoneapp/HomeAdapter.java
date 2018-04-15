@@ -48,6 +48,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Intent i = new Intent(home, ViewHabitActivity.class);
                     i.putExtra("myhabit", habit.getObjectId());
+                    i.putExtra("habitName",habit.getString("habitName"));
                     home.startActivity(i);
 
                 }
@@ -83,7 +84,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Log.d("TEST", Integer.toString(position));
         holder.habit = h;
         holder.txtName.setText(h.getString("habitName"));
-        holder.txtConsecutiveDays.setText(h.getString("streak") + " consecutive days!");
+        holder.txtConsecutiveDays.setText(h.get("streak") + " consecutive days!");
         holder.txtPercent.setText(h.getString("streak"));
 
         float density = holder.cardBackground.getContext().getResources().getDisplayMetrics().density;
