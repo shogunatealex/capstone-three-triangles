@@ -105,15 +105,16 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
 
-                    CollapsingToolbarLayout ThreeTriangleButtons = (findViewById(R.id.toolbar_layout));
+                    ImageView ThreeTriangleButtons = (findViewById(R.id.ThreeTriangleImage));
                     int i = Integer.parseInt(habit.get("streak").toString());
                     int resId;
                     String packageName = getPackageName();
                     resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
-                    ThreeTriangleButtons.setBackgroundResource(resId);
+                    ThreeTriangleButtons.setImageResource(resId);
 
                 }
                 populateData();
+                getGraphData();
             }
         });
     }
@@ -137,6 +138,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             Intent i = new Intent(this, AddHabitActivity.class);
             i.putExtra("myhabitID", habit.getObjectId());
             i.putExtra("myhabitName", habit.getString("habitName"));
+            i.putExtra("description", habit.getString("description"));
             i.putExtra("freq", habit.getString("frequency"));
             i.putExtra("streak", Integer.toString((Integer) habit.get("streak")));
             i.putExtra("history", habit.getString("history"));
@@ -152,6 +154,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void getGraphData() {
+        ArrayList<String> history = (ArrayList<String>) habit.get("history");
+        Log.d("HISTORY", history.toString());
+    }
+
     private void populateData() {
         TextView description = (TextView) findViewById(R.id.habit_description);
         TextView streak = (TextView) findViewById(R.id.habit_streak);
@@ -160,6 +167,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         description.setText(habit.getString("description"));
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
         frequency.setText("You are expected to check in " + habit.getString("frequency"));
+        description.setText(habit.getString("description"));
     }
 
     private void lineGraph() {

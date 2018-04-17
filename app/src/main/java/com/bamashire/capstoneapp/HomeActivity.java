@@ -38,13 +38,15 @@ import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView homeRecyclerView;
-    private RecyclerView.Adapter homeAdapter;
+    private HomeAdapter homeAdapter;
     private RecyclerView.LayoutManager homeLayoutManager;
     private List<ParseObject> myDataset = new ArrayList<ParseObject>();
     private HomeSwipeController swipeController;
@@ -172,9 +174,43 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         swipeController = new HomeSwipeController(new HomeSwipeControllerActions() {
             @Override
+            public void onLeftClicked(int position) {
+                homeAdapter.habits.get(position).deleteInBackground();
+                homeAdapter.habits.remove(position);
+                homeAdapter.notifyItemRemoved(position);
+                homeAdapter.notifyItemRangeChanged(position, homeAdapter.getItemCount());
+            }
+            @Override
             public void onRightClicked(int position, View view) {
-                Snackbar.make(view, "You have checked in ", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                ParseObject habit = homeAdapter.habits.get(position);
+                ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = df.format(c.getTime());
+
+                if (dates == null || dates.size() == 0) {
+                    habit.increment("streak");
+                    habit.add("history", formattedDate);
+                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
+                    Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    habit.increment("streak");
+                    habit.add("history", formattedDate);
+                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
+
+                try {
+                    habit.save();
+                } catch (ParseException e) {
+                    habit.saveInBackground();
+                }
+                getHabitsFromDb();
+                homeAdapter.notifyItemRangeChanged(position, homeAdapter.getItemCount());
             }
         });
 
@@ -194,17 +230,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         ThreeTrianglesApp.mGoogleSignInClient.silentSignIn();
         getHabitsFromDb();
+        homeAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-//            getHabitsFromDb();
-//    }
 
 
     private void getHabitsFromDb(){

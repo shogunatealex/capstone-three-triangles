@@ -23,8 +23,8 @@ import static com.bamashire.capstoneapp.ActivityUtils.showViewHabit;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    private List<ParseObject> habits;
-    private Activity home;
+    public List<ParseObject> habits;
+    public Activity home;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -34,7 +34,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public TextView txtName;
         public TextView txtConsecutiveDays;
         public TextView txtPercent;
-        public RelativeLayout cardBackground;
         public ParseObject habit;
 
         public ViewHolder(View v, Activity home) {
@@ -42,7 +41,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             txtName = (TextView) v.findViewById(R.id.txt_name);
             txtConsecutiveDays = (TextView) v.findViewById(R.id.txt_consecutive_days);
             txtPercent = (TextView) v.findViewById(R.id.txt_percent_complete);
-            cardBackground = v.findViewById(R.id.card_background);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -57,7 +55,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public HomeAdapter(List<ParseObject> myDataset, Activity home) {
-        habits = myDataset;
+        this.habits = myDataset;
         this.home = home;
     }
 
@@ -85,15 +83,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.txtName.setText(h.getString("habitName"));
         holder.txtConsecutiveDays.setText(streak + " consecutive days!");
         holder.txtPercent.setText(String.format("%,.0f%%", streak / .9));
-        
-        holder.itemView.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("WIDTH" , Integer.toString(holder.itemView.getWidth()));
-                Log.d("DAYS" , Integer.toString(streak));
-                Log.d("CALC" , Integer.toString((int) (holder.itemView.getWidth() * (streak / 90.0))));
-            }
-        });
 
     }
 
@@ -102,6 +91,5 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public int getItemCount() {
         return habits.size();
     }
-
 
 }
