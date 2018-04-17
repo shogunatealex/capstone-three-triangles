@@ -114,7 +114,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                 }
                 populateData();
-//                getGraphData();
+                getGraphData();
             }
         });
     }
@@ -138,6 +138,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             Intent i = new Intent(this, AddHabitActivity.class);
             i.putExtra("myhabitID", habit.getObjectId());
             i.putExtra("myhabitName", habit.getString("habitName"));
+            i.putExtra("description", habit.getString("description"));
             i.putExtra("freq", habit.getString("frequency"));
             i.putExtra("streak", Integer.toString((Integer) habit.get("streak")));
             i.putExtra("history", habit.getString("history"));
@@ -166,6 +167,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         description.setText(habit.getString("description"));
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
         frequency.setText("You are expected to check in " + habit.getString("frequency"));
+        description.setText(habit.getString("description"));
     }
 
     private void lineGraph() {
