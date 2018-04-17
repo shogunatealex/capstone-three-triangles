@@ -35,11 +35,14 @@ public class ThreeTrianglesApp extends Application {
 
         public static GoogleSignInClient mGoogleSignInClient;
         public static AchievementsClient mAchievementsClient;
+        public static AchievementUnlocked achievementInfo;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        achievementInfo = new AchievementUnlocked(this);
+        achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
                 .requestEmail()

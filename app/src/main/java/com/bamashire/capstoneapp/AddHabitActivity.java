@@ -30,6 +30,7 @@ import com.parse.SignUpCallback;
 public class AddHabitActivity extends AppCompatActivity implements OnItemSelectedListener {
 
     public static final String EXTRA_MESSAGE = "habit";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +128,18 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     }
 
     public void unlockFirstAchievement(){
+        AchievementData data = new AchievementData();
+        data.setTitle("Made your first achievement!");
+        data.setTextColor(123456);
+        data.setIconBackgroundColor(21364);
+        data.setBackgroundColor(468136);
+        data.setPopUpOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        ThreeTrianglesApp.achievementInfo.show(data);
         Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAQ");
     }
 
