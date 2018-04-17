@@ -212,14 +212,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
 
-                for(ParseObject object: objects){
-                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
-                    addNewHabit(object);
-                    //!!!!!!!!!!!
-                    //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
-                    //!!!!!!!!!!!
-                    //!!!!!!!!!!!
+                if (objects != null){
+                    for(ParseObject object: objects){
+                        Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+                        addNewHabit(object);
+                        //!!!!!!!!!!!
+                        //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
+                        //!!!!!!!!!!!
+                        //!!!!!!!!!!!
+                    }
                 }
+
 
             }
         });
