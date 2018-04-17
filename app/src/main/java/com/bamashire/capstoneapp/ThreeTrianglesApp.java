@@ -53,7 +53,7 @@ public class ThreeTrianglesApp extends Application {
         achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
 
         List premadeList = new ArrayList();
-        l1.add(0, 1);
+        premadeList = makeList(0,0,1);
         presetHabits.put("key", premadeList);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
@@ -96,5 +96,14 @@ public class ThreeTrianglesApp extends Application {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private List makeList(Integer a, Integer b, Integer c)
+    {
+        List premadeList = new ArrayList();
+        premadeList.add(a);
+        premadeList.add(b);
+        premadeList.add(c);
+        return premadeList;
     }
 }
