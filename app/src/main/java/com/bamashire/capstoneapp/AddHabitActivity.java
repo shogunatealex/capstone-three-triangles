@@ -17,6 +17,9 @@ import android.util.Log;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.Games;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -109,6 +112,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                 public void done(ParseException ex) {
                     if (ex == null) {
                         setResult(RESULT_OK, intent);
+                        unlockFirstAchievement();
                         Log.i("Parse Result", "Successful!");
                     } else {
                         Log.i("Parse Result", "Failed" + ex.toString());
@@ -120,6 +124,10 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
 
             finish();
         }
+    }
+
+    public void unlockFirstAchievement(){
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAQ");
     }
 
     @Override
