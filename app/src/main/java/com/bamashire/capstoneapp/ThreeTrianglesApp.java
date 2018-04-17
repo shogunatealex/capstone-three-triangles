@@ -30,12 +30,20 @@ import com.parse.SaveCallback;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class ThreeTrianglesApp extends Application {
 
         public static GoogleSignInClient mGoogleSignInClient;
         public static AchievementsClient mAchievementsClient;
         public static AchievementUnlocked achievementInfo;
+        public Map<String, List<Integer>> presetHabits = new HashMap<String, List<Integer>>();
 
 
     @Override
@@ -43,6 +51,10 @@ public class ThreeTrianglesApp extends Application {
         super.onCreate();
         achievementInfo = new AchievementUnlocked(this);
         achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
+
+        List premadeList = new ArrayList();
+        l1.add(0, 1);
+        presetHabits.put("key", premadeList);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
                 .requestEmail()
