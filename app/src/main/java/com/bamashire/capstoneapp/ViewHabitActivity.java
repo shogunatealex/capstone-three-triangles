@@ -45,9 +45,11 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     private String habitID;
     private ParseObject habit;
+    public boolean LockQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LockQuery = false;
         setTitle(getIntent().getStringExtra("habitName"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit);
@@ -60,34 +62,36 @@ public class ViewHabitActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<String> dates = (ArrayList<String>) habit.get("history");
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String formattedDate = df.format(c.getTime());
+                if (!LockQuery){
+                    ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedDate = df.format(c.getTime());
 
-                if (dates == null || dates.size() == 0) {
-                    habit.increment("streak");
-                    habit.add("history", formattedDate);
-                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
-                    Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    habit.increment("streak");
-                    habit.add("history", formattedDate);
-                    Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    if (dates == null || dates.size() == 0) {
+                        habit.increment("streak");
+                        habit.add("history", formattedDate);
+                        Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
+                        Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else {
+                        habit.increment("streak");
+                        habit.add("history", formattedDate);
+                        Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+
+                    try {
+                        habit.save();
+                    } catch (ParseException e) {
+                        habit.saveInBackground();
+                    }
+
+                    callApi();
                 }
 
-
-                try {
-                    habit.save();
-                } catch (ParseException e) {
-                    habit.saveInBackground();
-                }
-
-                callApi();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,12 +99,13 @@ public class ViewHabitActivity extends AppCompatActivity {
         barChart();
     }
     public void callApi(){
-
+        LockQuery = true;
         habitID = getIntent().getStringExtra("myhabit");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
         query.whereEqualTo("objectId", habitID);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
+                LockQuery = false;
                 for(ParseObject object: objects){
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));

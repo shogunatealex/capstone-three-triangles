@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,13 +35,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public TextView txtName;
         public TextView txtConsecutiveDays;
         public TextView txtPercent;
+        public ImageView smallTriangle;
         public ParseObject habit;
+        public Activity mHome;
 
         public ViewHolder(View v, Activity home) {
             super(v);
             txtName = (TextView) v.findViewById(R.id.txt_name);
             txtConsecutiveDays = (TextView) v.findViewById(R.id.txt_consecutive_days);
             txtPercent = (TextView) v.findViewById(R.id.txt_percent_complete);
+            mHome = home;
+            smallTriangle = (ImageView) v.findViewById(R.id.SmallTriangleCard);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -83,6 +88,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.txtName.setText(h.getString("habitName"));
         holder.txtConsecutiveDays.setText(streak + " consecutive days!");
         holder.txtPercent.setText(String.format("%,.0f%%", streak / .9));
+
+        int resId;
+        int i = Integer.parseInt(h.get("streak").toString());
+        String packageName = home.getPackageName();
+        resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        holder.smallTriangle.setImageResource(resId);
 
     }
 
