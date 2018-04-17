@@ -15,19 +15,19 @@
         android:fillColor="#000000"
         android:pathData="M249.2,9.5l124,214.9H125.2L249.2,9.5 M249.2,7.5L123.4,225.4H375L249.2,7.5L249.2,7.5z" />
     <path
-        android:fillColor="#3F0568"
+        android:fillColor="#fffb02"
         android:strokeColor="#000000"
         android:strokeWidth="1"
         android:strokeMiterLimit="10"
         android:pathData="M 0 440 L 125.5 224.5 L 132.5 234.5 L 250.5 440.5 Z" />
     <path
-        android:fillColor="#3F0568"
+        android:fillColor="#fffb02"
         android:strokeColor="#000000"
         android:strokeWidth="1"
         android:strokeMiterLimit="10"
         android:pathData="M 249.5 440.5 L 373.5 224.5 L 380.5 234.5 L 499.5 440.5 Z" />
     <path
-        android:fillColor="#3F0568"
+        android:fillColor="#fffb02"
         android:strokeColor="#000000"
         android:strokeWidth="1"
         android:strokeMiterLimit="10"
