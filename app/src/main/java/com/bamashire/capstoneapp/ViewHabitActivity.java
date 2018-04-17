@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -96,8 +97,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        lineGraph();
-        barChart();
+        calendarChange();
     }
     public void callApi(){
         LockQuery = true;
@@ -125,6 +125,19 @@ public class ViewHabitActivity extends AppCompatActivity {
         });
     }
 
+    public void calendarChange() {
+        CalendarView cv = findViewById(R.id.calendar);
+        TextView datetext = findViewById(R.id.calendar_date);
+        Date d = new Date(cv.getDate());
+        datetext.setText(d.getDay() + " " + d.getMonth() + " " + d.getDate());
+        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                long date = cv.getDate();
+                Date d = new Date(date);
+                Log.d("test", year + Integer.toString(month) + dayOfMonth);
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -166,6 +179,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     private void getGraphData() {
         ArrayList<String> history = (ArrayList<String>) habit.get("history");
+
         Log.d("HISTORY", history.toString());
     }
 
@@ -180,34 +194,4 @@ public class ViewHabitActivity extends AppCompatActivity {
         description.setText(habit.getString("description"));
     }
 
-    private void lineGraph() {
-        LineChartView lcv = findViewById(R.id.line_chart);
-        String[] mLabels = {"Jan", "Feb", "Mar", "Apr"};
-
-        float[] mValues = {3.5f, 4.7f, 4.3f, 8f};
-        LineSet ls = new LineSet(mLabels, mValues);
-        ls.setColor(Color.parseColor("#758cbb"))
-                .setFill(Color.parseColor("#2d374c"))
-                .setDotsColor(Color.parseColor("#758cbb"))
-                .setThickness(4)
-                .beginAt(0);
-        lcv.addData(ls);
-        lcv.show();
-    }
-
-    private void barChart() {
-        String[] mLabels = {"Jan", "Feb", "Mar", "Apr"};
-        float[][] mValues = {{6.5f, 8.5f, 2.5f, 10f}, {7.5f, 3.5f, 5.5f, 4f}};
-        int[] order = {1, 0, 2, 3};
-
-        BarChartView mChart = (BarChartView) findViewById(R.id.bar_chart);
-        BarSet barSet = new BarSet(mLabels, mValues[0]);
-        barSet.setColor(Color.parseColor("#fc2a53"));
-        mChart.addData(barSet);
-        mChart.setYAxis(false);
-        mChart.setXAxis(false);
-        mChart.setYLabels(YRenderer.LabelPosition.NONE);
-
-        mChart.show();
-    }
 }
