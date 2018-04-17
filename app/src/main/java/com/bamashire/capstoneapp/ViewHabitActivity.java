@@ -114,6 +114,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                 }
                 populateData();
+//                getGraphData();
             }
         });
     }
@@ -150,6 +151,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getGraphData() {
+        ArrayList<String> history = (ArrayList<String>) habit.get("history");
+        Log.d("HISTORY", history.toString());
     }
 
     private void populateData() {

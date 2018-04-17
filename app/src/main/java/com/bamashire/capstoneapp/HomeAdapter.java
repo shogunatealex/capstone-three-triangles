@@ -23,8 +23,8 @@ import static com.bamashire.capstoneapp.ActivityUtils.showViewHabit;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    private List<ParseObject> habits;
-    private Activity home;
+    public List<ParseObject> habits;
+    public Activity home;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -55,7 +55,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public HomeAdapter(List<ParseObject> myDataset, Activity home) {
-        habits = myDataset;
+        this.habits = myDataset;
         this.home = home;
     }
 
@@ -91,6 +91,5 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public int getItemCount() {
         return habits.size();
     }
-
 
 }
