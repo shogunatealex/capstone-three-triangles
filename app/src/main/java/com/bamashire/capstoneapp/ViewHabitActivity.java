@@ -105,12 +105,12 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
 
-                    CollapsingToolbarLayout ThreeTriangleButtons = (findViewById(R.id.toolbar_layout));
+                    ImageView ThreeTriangleButtons = (findViewById(R.id.ThreeTriangleImage));
                     int i = Integer.parseInt(habit.get("streak").toString());
                     int resId;
                     String packageName = getPackageName();
                     resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
-                    ThreeTriangleButtons.setBackgroundResource(resId);
+                    ThreeTriangleButtons.setImageResource(resId);
 
                 }
                 populateData();
