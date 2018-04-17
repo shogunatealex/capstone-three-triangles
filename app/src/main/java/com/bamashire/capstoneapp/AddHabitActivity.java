@@ -58,6 +58,10 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
             setTitle(getIntent().getStringExtra("myhabitName"));
             EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
             habitText.setText(getIntent().getStringExtra("myhabitName"));
+            EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
+            countText.setText(getIntent().getStringExtra("perDayCount"));
+            EditText editTextDescription = (EditText) findViewById(R.id.EditTextDescription);
+            editTextDescription.setText(getIntent().getStringExtra("description"));
         }else{
             setTitle("Create Habit");
         }
@@ -82,9 +86,15 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         countDropdown.setAdapter(countAdapter);
         countDropdown.setOnItemSelectedListener(this);
         if(getIntent().getStringExtra("myhabitID") != null) {
-            int spinnerPosition = freqAdapter.getPosition(getIntent().getStringExtra("frequency"));
+            String freq = getIntent().getStringExtra("freq");
+            int spinnerPosition = freqAdapter.getPosition(freq);
             freqDropdown.setSelection(spinnerPosition);
          }
+        if(getIntent().getStringExtra("myhabitID") != null) {
+            String freq = getIntent().getStringExtra("freq");
+            int spinnerPosition = freqAdapter.getPosition(freq);
+            freqDropdown.setSelection(spinnerPosition);
+        }
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -120,6 +130,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     public void addHabit(View view) {
         EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
         EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
+        EditText editTextDescription = (EditText) findViewById(R.id.EditTextDescription);
         if (habitText.getText().toString().matches("")){
             showToast("Please enter a habit name");}
         else if (countText.getText().toString().matches("")){
@@ -138,11 +149,14 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                             habit.put("streak", Integer.parseInt(getIntent().getStringExtra("streak")));
                             habit.put("frequency", spinnerText);
                             habit.put("ownerID", ParseUser.getCurrentUser().getObjectId());
+                            habit.put("history",getIntent().getSerializableExtra("history"));
+                            habit.put("description",editTextDescription.getText().toString());
+                            habit.put("perDayCount",Integer.parseInt(countText.getText().toString()));
                             habit.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException ex) {
                                     if (ex == null) {
-                                        unlockFirstAchievement();
+//                                        unlockFirstAchievement();
                                         setResult(RESULT_OK, intent);
                                         Log.i("Parse Result", "Successful!");
                                     } else {
@@ -159,6 +173,8 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                 object.put("streak", 0);
                 object.put("frequency", spinnerText);
                 object.put("ownerID", ParseUser.getCurrentUser().getObjectId());
+                object.put("description",editTextDescription.getText().toString());
+                object.put("perDayCount", Integer.parseInt(countText.getText().toString()));
                 object.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException ex) {

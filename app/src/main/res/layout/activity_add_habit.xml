@@ -126,7 +126,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/EditTextDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
