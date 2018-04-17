@@ -18,17 +18,12 @@ import com.parse.ParseAnalytics;
 
 public class MainActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 3951;
-    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .requestId()
-            .build();
 
 
     Activity mParent = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         super.onCreate(savedInstanceState);
 
@@ -36,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
         findViewById(R.id.sign_in_google_button).setOnClickListener((v) -> {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
+            startActivityForResult(ThreeTrianglesApp.mGoogleSignInClient.getSignInIntent().putExtra("EXTRA_GAME_ID", 	"831833899474"), RC_SIGN_IN);
         });
 
         findViewById(R.id.signupMainButton).setOnClickListener(new View.OnClickListener() {
