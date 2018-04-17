@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +132,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getHabitsFromDb();
+        View hView =  navigationView.getHeaderView(0);
+
+        TextView drawerName = (TextView) hView.findViewById(R.id.drawer_name);
+        TextView drawerEmail = (TextView) hView.findViewById(R.id.drawer_email);
+
+        drawerName.setText(ParseUser.getCurrentUser().getUsername());
+        drawerEmail.setText(ParseUser.getCurrentUser().getEmail());
 
     }
 
@@ -181,6 +191,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        getHabitsFromDb();
     }
 
     @Override
@@ -188,10 +199,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-            getHabitsFromDb();
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+//            getHabitsFromDb();
+//    }
 
     private void getHabitsFromDb(){
         //Get User's Habits bellow
@@ -201,14 +212,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
 
-                for(ParseObject object: objects){
-                    Log.d("succesfull querry", "done: "+ object.getString("habitName"));
-                    addNewHabit(object);
-                    //!!!!!!!!!!!
-                    //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
-                    //!!!!!!!!!!!
-                    //!!!!!!!!!!!
+                if (objects != null){
+                    for(ParseObject object: objects){
+                        Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+                        addNewHabit(object);
+                        //!!!!!!!!!!!
+                        //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
+                        //!!!!!!!!!!!
+                        //!!!!!!!!!!!
+                    }
                 }
+
 
             }
         });

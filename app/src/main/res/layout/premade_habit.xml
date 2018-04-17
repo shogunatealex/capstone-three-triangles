@@ -1,71 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Hydrate"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="166dp" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Run"
-        tools:layout_editor_absoluteX="203dp"
-        tools:layout_editor_absoluteY="166dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Call Friend"
-        tools:layout_editor_absoluteX="203dp"
-        tools:layout_editor_absoluteY="241dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Do something"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="241dp" />
+                <Button
+                    android:id="@+id/buttonEatMoreFruit"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:onClick="preMadeHabit"
+                    android:text="Eat More Fruit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Play Instrument"
-        tools:layout_editor_absoluteX="203dp"
-        tools:layout_editor_absoluteY="90dp" />
+                <Button
+                    android:id="@+id/buttonEatMoreVeggies"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Eat More Veggies"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Read"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="90dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Quit Smoking"
-        tools:layout_editor_absoluteX="203dp"
-        tools:layout_editor_absoluteY="16dp" />
+                <Button
+                    android:id="@+id/buttonEatBreakfast"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Eat Breakfast"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:text="Exercise"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
-</android.support.constraint.ConstraintLayout>
+                <Button
+                    android:id="@+id/buttonVitamin"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Take Multivitamin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonDrinkWater"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Drink More Water"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonNoCaffeine"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="No Caffeine"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonQuitSmoking"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Quit Smoking"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonAlcohol"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="No Alcohol"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonSleep"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="8 Hours of Sleep"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/buttonWakeUp"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Wake Up Early"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/buttonExercise"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Exercise"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/buttonSteps"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Get 10,000 Steps"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonRun"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Run"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/buttonYoga"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Yoga"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonRead"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Read"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+                <Button
+                    android:id="@+id/buttonPlayInstrument"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Play Instrument"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/buttonCallFriend"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Call Friend"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+                <Button
+                    android:id="@+id/buttonMeditate"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Meditate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/buttonVaccum"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Vaccum"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+                <Button
+                    android:id="@+id/buttonDust"
+                    android:layout_width="165dp"
+                    android:layout_height="58dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="Dust"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </GridLayout>
+</android.support.v4.widget.NestedScrollView>

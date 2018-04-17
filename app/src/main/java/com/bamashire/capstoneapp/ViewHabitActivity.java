@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -79,20 +80,17 @@ public class ViewHabitActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }
 
-                habit.saveInBackground();
+
+                try {
+                    habit.save();
+                } catch (ParseException e) {
+                    habit.saveInBackground();
+                }
 
                 callApi();
-
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        ImageView ThreeTriangleButtons = (findViewById(R.id.three_triangles_image));
-        int resId;
-        int i = 50;
-        String packageName = getPackageName();
-        resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
-        ThreeTriangleButtons.setImageResource(resId);
         lineGraph();
         barChart();
     }
@@ -106,6 +104,14 @@ public class ViewHabitActivity extends AppCompatActivity {
                 for(ParseObject object: objects){
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+
+                    CollapsingToolbarLayout ThreeTriangleButtons = (findViewById(R.id.toolbar_layout));
+                    int i = Integer.parseInt(habit.get("streak").toString());
+                    int resId;
+                    String packageName = getPackageName();
+                    resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+                    ThreeTriangleButtons.setBackgroundResource(resId);
+
                 }
                 populateData();
             }
@@ -138,7 +144,8 @@ public class ViewHabitActivity extends AppCompatActivity {
             this.startActivity(i);
             return true;
         } else if (id == R.id.action_delete) {
-            Log.d("S", "Delete CLICKED");
+            habit.deleteInBackground();
+            finish();
             return true;
         }
 

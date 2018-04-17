@@ -113,14 +113,15 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     }
 
     public void addHabit(View view) {
-        EditText editText = (EditText) findViewById(R.id.EnterHabitNameText);
-
-        if (editText.getText().toString().matches("")){
-
+        EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
+        EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
+        if (habitText.getText().toString().matches("")){
             showToast("Please enter a habit name");}
+        else if (countText.getText().toString().matches("")){
+            showToast("Please enter a count");}
         else {
             Intent intent = new Intent(this, HomeActivity.class);
-            String habitName = editText.getText().toString();
+            String habitName = habitText.getText().toString();
             Spinner freqDropdown = findViewById(R.id.FrequencySpinner);
             String spinnerText = freqDropdown.getSelectedItem().toString();
             if(habitID != null) {
