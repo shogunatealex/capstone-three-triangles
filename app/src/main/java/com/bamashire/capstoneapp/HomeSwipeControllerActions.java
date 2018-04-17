@@ -8,6 +8,7 @@ import android.view.View;
 
 public abstract class HomeSwipeControllerActions {
 
+    public void onLeftClicked(int position) {}
     public void onRightClicked(int position, View v) {}
 
 }

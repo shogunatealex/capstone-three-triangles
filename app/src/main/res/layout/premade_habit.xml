@@ -29,6 +29,7 @@
                     android:layout_weight="1"
                     android:onClick="preMadeHabit"
                     android:text="Eat More Fruit"
+                    android:backgroundTint="@color/colorOrange"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
 
@@ -36,11 +37,13 @@
                     android:id="@+id/buttonEatMoreVeggies"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Eat More Veggies"
+                    android:backgroundTint="@color/colorBlueDrab"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
@@ -58,7 +61,9 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Eat Breakfast"
+                    android:backgroundTint="@color/colorGreen"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
 
@@ -66,11 +71,13 @@
                     android:id="@+id/buttonVitamin"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Take Multivitamin"
+                    android:backgroundTint="@color/colorLightBlue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
@@ -88,7 +95,9 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Drink More Water"
+                    android:backgroundTint="@color/colorTan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
 
@@ -96,11 +105,13 @@
                     android:id="@+id/buttonNoCaffeine"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="No Caffeine"
+                    android:backgroundTint="@color/colorPurpley"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
@@ -117,7 +128,9 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Quit Smoking"
+                    android:backgroundTint="@color/colorBlueDrab"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
 
@@ -125,11 +138,13 @@
                     android:id="@+id/buttonAlcohol"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="No Alcohol"
+                    android:backgroundTint="@color/colorOrange"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
@@ -146,18 +161,23 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="8 Hours of Sleep"
+                    android:backgroundTint="@color/colorLightBlue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <Button
                     android:id="@+id/buttonWakeUp"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Wake Up Early"
+                    android:backgroundTint="@color/colorGreen"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
@@ -166,6 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/buttonExercise"
                     android:layout_width="165dp"
@@ -174,18 +195,23 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Exercise"
+                    android:backgroundTint="@color/colorPurpley"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <Button
                     android:id="@+id/buttonSteps"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Get 10,000 Steps"
+                    android:backgroundTint="@color/colorTan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
@@ -203,18 +229,23 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Run"
+                    android:backgroundTint="@color/colorOrange"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <Button
                     android:id="@+id/buttonYoga"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Yoga"
+                    android:backgroundTint="@color/colorBlueDrab"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
@@ -232,18 +263,23 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Read"
+                    android:backgroundTint="@color/colorGreen"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
+
                 <Button
                     android:id="@+id/buttonPlayInstrument"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Play Instrument"
+                    android:backgroundTint="@color/colorLightBlue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
@@ -252,6 +288,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/buttonCallFriend"
                     android:layout_width="165dp"
@@ -260,18 +297,23 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Call Friend"
+                    android:backgroundTint="@color/colorTan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
+
                 <Button
                     android:id="@+id/buttonMeditate"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Meditate"
+                    android:backgroundTint="@color/colorPurpley"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
@@ -280,6 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/buttonVaccum"
                     android:layout_width="165dp"
@@ -288,18 +331,23 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Vaccum"
+                    android:backgroundTint="@color/colorBlueDrab"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
+
                 <Button
                     android:id="@+id/buttonDust"
                     android:layout_width="165dp"
                     android:layout_height="58dp"
-                    android:layout_marginRight="24dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
+                    android:onClick="preMadeHabit"
                     android:text="Dust"
+                    android:backgroundTint="@color/colorOrange"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
