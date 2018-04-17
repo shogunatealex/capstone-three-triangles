@@ -24,6 +24,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -138,8 +139,12 @@ public class ViewHabitActivity extends AppCompatActivity {
             i.putExtra("myhabitID", habit.getObjectId());
             i.putExtra("myhabitName", habit.getString("habitName"));
             i.putExtra("freq", habit.getString("frequency"));
+            i.putExtra("description", habit.getString("description"));
             i.putExtra("streak", Integer.toString((Integer) habit.get("streak")));
-            i.putExtra("history", habit.getString("history"));
+            i.putExtra("perDayCount", Integer.toString((Integer) habit.get("perDayCount")));
+
+            i.putExtra("history", (Serializable) habit.get("history"));
+            Log.i("history",habit.get("history").toString());
 
             this.startActivity(i);
             return true;
