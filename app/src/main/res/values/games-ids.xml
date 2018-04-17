@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <!-- app_id -->
+    <string name="app_id" translatable="false">831833899474</string>
+    <!-- package_name -->
+    <string name="package_name" translatable="false">com.bamashire.capstoneapp</string>
+    <!-- achievement First Habit -->
+    <string name="achievement_first_habit" translatable="false">CgkI0oOo6ZoYEAIQAQ</string>
+    <!-- achievement Add 5 Habits -->
+    <string name="achievement_add_5_habits" translatable="false">CgkI0oOo6ZoYEAIQAg</string>
+    <!-- achievement No one's perfect -->
+    <string name="achievement_no_ones_perfect" translatable="false">CgkI0oOo6ZoYEAIQAw</string>
+    <!-- achievement Check in 10 Times -->
+    <string name="achievement_check_in_10_times" translatable="false">CgkI0oOo6ZoYEAIQBA</string>
+    <!-- achievement Check in 50 Times -->
+    <string name="achievement_check_in_50_times" translatable="false">CgkI0oOo6ZoYEAIQBQ</string>
+</resources>

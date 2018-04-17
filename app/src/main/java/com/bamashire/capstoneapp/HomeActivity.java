@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(ParseUser.getCurrentUser() == null) {
+            ThreeTrianglesApp.mGoogleSignInClient.signOut();
             ActivityUtils.showMainPage(this);
             return;
         }
@@ -191,7 +192,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        ThreeTrianglesApp.mGoogleSignInClient.silentSignIn();
         getHabitsFromDb();
+        homeAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -199,15 +202,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-//            getHabitsFromDb();
-//    }
 
     private void getHabitsFromDb(){
         //Get User's Habits bellow
         myDataset.clear();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
+        if(ParseUser.getCurrentUser() == null){
+            return;
+        }
         query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
@@ -283,6 +285,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_sign_out){
             ParseUser.logOut();
+            ThreeTrianglesApp.mGoogleSignInClient.signOut();
             ActivityUtils.showMainPage(this);
             finish();
 

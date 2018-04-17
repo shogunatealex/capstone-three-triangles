@@ -10,6 +10,10 @@ package com.bamashire.capstoneapp;
 
 import android.app.Application;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.games.AchievementsClient;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseUser;
@@ -29,10 +33,22 @@ import android.widget.Toast;
 
 public class ThreeTrianglesApp extends Application {
 
+        public static GoogleSignInClient mGoogleSignInClient;
+        public static AchievementsClient mAchievementsClient;
+        public static AchievementUnlocked achievementInfo;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+        achievementInfo = new AchievementUnlocked(this);
+        achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
+                .requestEmail()
+                .requestId()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 

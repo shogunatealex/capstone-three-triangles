@@ -18,6 +18,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.Games;
+
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseAnalytics;
@@ -43,6 +47,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
 
 
     public static final String EXTRA_MESSAGE = "habit";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +142,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                                 @Override
                                 public void done(ParseException ex) {
                                     if (ex == null) {
+                                        unlockFirstAchievement();
                                         setResult(RESULT_OK, intent);
                                         Log.i("Parse Result", "Successful!");
                                     } else {
@@ -171,6 +177,22 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
 
             finish();
         }
+    }
+
+    public void unlockFirstAchievement(){
+        AchievementData data = new AchievementData();
+        data.setTitle("Made your first achievement!");
+        data.setTextColor(123456);
+        data.setIconBackgroundColor(21364);
+        data.setBackgroundColor(468136);
+        data.setPopUpOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        ThreeTrianglesApp.achievementInfo.show(data);
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAQ");
     }
 
     @Override
