@@ -1,5 +1,6 @@
 package com.bamashire.capstoneapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -127,7 +128,14 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit) {
-            Log.d("S", "Edit CLICKED");
+            Intent i = new Intent(this, AddHabitActivity.class);
+            i.putExtra("myhabitID", habit.getObjectId());
+            i.putExtra("myhabitName", habit.getString("habitName"));
+            i.putExtra("freq", habit.getString("frequency"));
+            i.putExtra("streak", Integer.toString((Integer) habit.get("streak")));
+            i.putExtra("history", habit.getString("history"));
+
+            this.startActivity(i);
             return true;
         } else if (id == R.id.action_delete) {
             Log.d("S", "Delete CLICKED");
