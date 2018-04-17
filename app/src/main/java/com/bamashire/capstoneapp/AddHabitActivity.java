@@ -18,44 +18,73 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
+
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import java.util.List;
+
+
 public class AddHabitActivity extends AppCompatActivity implements OnItemSelectedListener {
+
+    private String habitID;
+    private ParseObject habit;
+    Spinner timesPerDropdown;
+    Spinner freqDropdown;
+    Spinner countDropdown;
+    ArrayAdapter<String> freqAdapter;
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
+
 
     public static final String EXTRA_MESSAGE = "habit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Create Habit");
         setContentView(R.layout.activity_add_habit);
 
+        if(getIntent().getStringExtra("myhabitName") != null){
+            habitID = getIntent().getStringExtra("myhabitID");
+            setTitle(getIntent().getStringExtra("myhabitName"));
+            EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
+            habitText.setText(getIntent().getStringExtra("myhabitName"));
+        }else{
+            setTitle("Create Habit");
+        }
+
         //Frequency spinner setup
-        Spinner freqDropdown = findViewById(R.id.FrequencySpinner);
+        freqDropdown = findViewById(R.id.FrequencySpinner);
         String[] freqItems = new String[]{"Daily", "Every other day", "Weekdays", "Weekends", "Frequency per week"};
-        ArrayAdapter<String> freqAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, freqItems);
+        freqAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, freqItems);
         freqDropdown.setAdapter(freqAdapter);
         freqDropdown.setOnItemSelectedListener(this);
 
         //Times per week spinner setup
-        Spinner timesPerDropdown = findViewById(R.id.TimesPerWeekSpinner);
+        timesPerDropdown = findViewById(R.id.TimesPerWeekSpinner);
         String[] timesPerItems = new String[]{"1", "2", "3", "4", "5", "6", "7"};
         ArrayAdapter<String> timesPerWeekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timesPerItems);
         timesPerDropdown.setAdapter(timesPerWeekAdapter);
 
         //Count spinner setup
-        Spinner countDropdown = findViewById(R.id.CountSpinner);
+        countDropdown = findViewById(R.id.CountSpinner);
         String[] countItems = new String[]{"Times per day", "Minutes per day"};
         ArrayAdapter<String> countAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countItems);
         countDropdown.setAdapter(countAdapter);
         countDropdown.setOnItemSelectedListener(this);
+        if(getIntent().getStringExtra("myhabitID") != null) {
+            int spinnerPosition = freqAdapter.getPosition(getIntent().getStringExtra("frequency"));
+            freqDropdown.setSelection(spinnerPosition);
+         }
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -100,26 +129,49 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
             String habitName = habitText.getText().toString();
             Spinner freqDropdown = findViewById(R.id.FrequencySpinner);
             String spinnerText = freqDropdown.getSelectedItem().toString();
+            if(habitID != null) {
+                query.getInBackground(habitID, new GetCallback<ParseObject>() {
 
-            ParseObject object = new ParseObject("Habit");
-            object.put("habitName", habitName);
-            object.put("streak",0);
-            object.put("frequency",spinnerText);
-            object.put("ownerID", ParseUser.getCurrentUser().getObjectId());
-//            object.put("perDay"),
-
-            object.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException ex) {
-                    if (ex == null) {
-                        setResult(RESULT_OK, intent);
-                        unlockFirstAchievement();
-                        Log.i("Parse Result", "Successful!");
-                    } else {
-                        Log.i("Parse Result", "Failed" + ex.toString());
+                    public void done(ParseObject habit, ParseException e) {
+                        if (e == null) {
+                            habit.put("habitName", habitName);
+                            habit.put("streak", Integer.parseInt(getIntent().getStringExtra("streak")));
+                            habit.put("frequency", spinnerText);
+                            habit.put("ownerID", ParseUser.getCurrentUser().getObjectId());
+                            habit.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException ex) {
+                                    if (ex == null) {
+                                        unlockFirstAchievement();
+                                        setResult(RESULT_OK, intent);
+                                        Log.i("Parse Result", "Successful!");
+                                    } else {
+                                        Log.i("Parse Result", "Failed" + ex.toString());
+                                    }
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }else {
+                ParseObject object = new ParseObject("Habit");
+                object.put("habitName", habitName);
+                object.put("streak", 0);
+                object.put("frequency", spinnerText);
+                object.put("ownerID", ParseUser.getCurrentUser().getObjectId());
+                object.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException ex) {
+                        if (ex == null) {
+                            setResult(RESULT_OK, intent);
+                            Log.i("Parse Result", "Successful!");
+                        } else {
+                            Log.i("Parse Result", "Failed" + ex.toString());
+                        }
+                    }
+                });
+            }
+
 
 
 
