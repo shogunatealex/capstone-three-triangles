@@ -79,20 +79,17 @@ public class ViewHabitActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }
 
-                habit.saveInBackground();
+
+                try {
+                    habit.save();
+                } catch (ParseException e) {
+                    habit.saveInBackground();
+                }
 
                 callApi();
-
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        CollapsingToolbarLayout ThreeTriangleButtons = (findViewById(R.id.toolbar_layout));
-        int resId;
-        int i = 50;
-        String packageName = getPackageName();
-        resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
-        ThreeTriangleButtons.setBackgroundResource(resId);
         lineGraph();
         barChart();
     }
@@ -106,6 +103,14 @@ public class ViewHabitActivity extends AppCompatActivity {
                 for(ParseObject object: objects){
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
+
+                    CollapsingToolbarLayout ThreeTriangleButtons = (findViewById(R.id.toolbar_layout));
+                    int i = Integer.parseInt(habit.get("streak").toString());
+                    int resId;
+                    String packageName = getPackageName();
+                    resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+                    ThreeTriangleButtons.setBackgroundResource(resId);
+
                 }
                 populateData();
             }
