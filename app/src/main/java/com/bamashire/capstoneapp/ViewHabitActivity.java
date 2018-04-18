@@ -180,6 +180,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     private void getGraphData() {
         ArrayList<String> history = (ArrayList<String>) habit.get("history");
 
+        //TODO This crashes the app with a null pointer exception when you have zero checkins.
         Log.d("HISTORY", history.toString());
     }
 
