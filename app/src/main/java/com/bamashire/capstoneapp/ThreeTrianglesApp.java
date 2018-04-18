@@ -49,6 +49,7 @@ public class ThreeTrianglesApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Preferences.initiatePreferences(this);
         achievementInfo = new AchievementUnlocked(this);
         achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
 

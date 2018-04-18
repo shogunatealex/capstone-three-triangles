@@ -16,15 +16,24 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.parse.ParseAnalytics;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 3951;
+    public static final int CHECKIN_ID = 4932;
 
 
     Activity mParent = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Date date = new Date();
+        Date lastNotify = Preferences.getKeyNotificationLastDate();
 
+        if (lastNotify.before(date)){
+            NotificationUtils.postServiceReminders(this, CHECKIN_ID, "Practice Notification", "This is a practice notification", this);
+            Preferences.setKeyNotificationsLastDate(new Date());
+        }
         super.onCreate(savedInstanceState);
 
 

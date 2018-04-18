@@ -230,7 +230,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         ThreeTrianglesApp.mGoogleSignInClient.silentSignIn();
         getHabitsFromDb();
-        homeAdapter.notifyDataSetChanged();
+        if (homeAdapter != null){
+            homeAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
