@@ -13,8 +13,8 @@ import android.content.Intent;
 
 public final class NotificationUtils {
 
-    public static void postServiceReminders(Context context, int notificationId, String title, String content, Activity parent) {
-        final PendingIntent contentIntent = PendingIntent.getActivity(context, notificationId, new Intent(context, parent.getClass()), PendingIntent.FLAG_CANCEL_CURRENT);
+    public static void postServiceReminders(Context context, int notificationId, String title, String content) {
+        final PendingIntent contentIntent = PendingIntent.getActivity(context, notificationId, new Intent(context, HomeActivity.class), PendingIntent.FLAG_CANCEL_CURRENT);
         final Notification.Builder notificationBuilder = new Notification.Builder(context)
                 .setSmallIcon(R.drawable.app_logo)
                 .setTicker(title)

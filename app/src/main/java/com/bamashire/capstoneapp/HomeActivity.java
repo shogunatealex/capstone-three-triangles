@@ -77,6 +77,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         initRecyclerView();
+        BackgroundServiceUtils.startBackgroundServices(this);
 
         //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 

@@ -20,6 +20,30 @@
         tools:replace="android:icon">
         <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/app_id"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+
+        <service android:name=".CheckInReminderPostNotificationService" android:enabled="true" android:exported="false"/>
+
+        <receiver android:name=".BackgroundServicesManager" android:enabled="true" android:exported="false">
+            <intent-filter>
+                <action android:name="three-triangles.intent.action.SCHEDULE_ALL_SERVICES"/>
+                <action android:name="three-triangles.intent.action.CANCEL_ALL_SERVICES"/>
+
+                <action android:name="three-triangles.intent.action.RESCHEDULE_REMINDER_POST_NOTIFICATIONS"/>
+                <action android:name="three-triangles.intent.action.STATUS_CHANGED_REMINDER_POST_NOTIFICATIONS"/>
+
+                <action android:name="three-triangles.intent.action.RESCHEDULE_AUTOMATIC_BACKUP"/>
+                <action android:name="three-triangles.intent.action.STATUS_CHANGED_AUTOMATIC_BACKUP"/>
+
+                <action android:name="three-triangles.intent.action.RESCHEDULE_PRO_REMINDER"/>
+                <action android:name="three-triangles.intent.action.STATUS_CHANGED_PRO_REMINDER"/>
+
+                <action android:name="three-triangles.intent.action.RESCHEDULE_LICENSE_VALIDITY_CHECK"/>
+                <action android:name="three-triangles.intent.action.STATUS_CHANGED_LICENSE_VALIDITY_CHECK"/>
+
+                <action android:name="three-triangles.intent.action.FORCE_SCHEDULE_REMINDERS_UPDATE"/>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".SignUpActivity"
             android:label="@string/app_name"
