@@ -19,6 +19,9 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.games.Games;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -48,9 +51,11 @@ public class ViewHabitActivity extends AppCompatActivity {
     private String habitID;
     private ParseObject habit;
     public boolean LockQuery;
+    private GoogleSignInAccount account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        account = GoogleSignIn.getLastSignedInAccount(this);
         LockQuery = false;
         setTitle(getIntent().getStringExtra("habitName"));
         super.onCreate(savedInstanceState);
@@ -71,6 +76,9 @@ public class ViewHabitActivity extends AppCompatActivity {
                     String formattedDate = df.format(c.getTime());
 
                     if (dates == null || dates.size() == 0 && ((int) habit.get("perDayCount"))==1) {
+                        if(account != null){
+                            incrementCheckinAchievements();
+                        }
                         habit.increment("streak");
                         habit.add("history", formattedDate);
                         Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
@@ -79,6 +87,9 @@ public class ViewHabitActivity extends AppCompatActivity {
                         Snackbar.make(view, "You have already checked in.", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     } else {
+                        if(account != null){
+                            incrementCheckinAchievements();
+                        }
                         habit.increment("streak");
                         habit.add("history", formattedDate);
                         Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
@@ -224,6 +235,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
         frequency.setText("You are expected to check in " + habit.getString("frequency"));
         description.setText(habit.getString("description"));
+    }
+
+    public void incrementCheckinAchievements(){
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBA",1);
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBQ",1);
     }
 
 }

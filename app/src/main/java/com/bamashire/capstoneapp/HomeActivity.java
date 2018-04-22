@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView homeRecyclerView;
@@ -54,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fabSettings;
     private LinearLayout layoutFabCustom;
     private LinearLayout layoutFabPremade;
+    private GoogleSignInAccount account;
 
     private void addHabit(){
         //myDataset.add(new Habit(habitName));
@@ -62,6 +65,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        account = GoogleSignIn.getLastSignedInAccount(this);
         super.onCreate(savedInstanceState);
         setTitle("Main Page");
         setContentView(R.layout.activity_home);
@@ -182,6 +186,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 String formattedDate = df.format(c.getTime());
 
                 if (dates == null || dates.size() == 0) {
+                    if(account != null){
+                        incrementCheckinAchievements();
+                    }
                     habit.increment("streak");
                     habit.add("history", formattedDate);
                     Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
@@ -190,6 +197,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
+                    if(account != null){
+                        incrementCheckinAchievements();
+                    }
                     habit.increment("streak");
                     habit.add("history", formattedDate);
                     Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
@@ -355,5 +365,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void incrementCheckinAchievements(){
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBA",1);
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBQ",1);
     }
 }
