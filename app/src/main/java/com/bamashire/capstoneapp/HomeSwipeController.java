@@ -150,7 +150,6 @@ class HomeSwipeController extends Callback {
         }
     }
 
-    //Draws the delete and check in buttons
     private void drawButtons(Canvas c, RecyclerView.ViewHolder viewHolder) {
         float buttonWidthWithoutPadding = buttonWidth - 20;
         float corners = 16;

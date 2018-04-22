@@ -39,8 +39,6 @@
                 android:text="Custom Habit"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
                 app:elevation="0dp"/>
         </android.support.v7.widget.CardView>
 
@@ -78,8 +76,6 @@
                 android:text="Premade Habits"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
                 app:elevation="0dp"/>
 
         </android.support.v7.widget.CardView>

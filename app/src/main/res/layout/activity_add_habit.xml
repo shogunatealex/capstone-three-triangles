@@ -80,18 +80,25 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/TimesPerWeekSpinner"
         android:layout_marginTop="17dp"
-        android:text="Times Per Day"
+        android:text="Count"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <Spinner
+        android:id="@+id/CountSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/CountText" />
 
     <EditText
         android:id="@+id/CountTimesPerDayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/CountText"
+        android:layout_below="@+id/CountSpinner"
+        android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="Enter Times Per Day"
+        android:hint="Enter Count"
         android:inputType="number"
         android:singleLine="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"

@@ -29,7 +29,6 @@ public class PreMadeHabitActivity extends AppCompatActivity  {
         String buttonText = b.getText().toString();
         Intent intent = new Intent(this, AddHabitActivity.class);
         intent.putExtra("myhabitName", buttonText);
-        intent.putExtra("preMade", "premade");
         this.startActivity(intent);
         finish();
     }
