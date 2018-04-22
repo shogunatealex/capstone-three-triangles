@@ -257,8 +257,8 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         String apiDescription = habit.getString("description");
-        Log.d("DESC", apiDescription);
-        if (apiDescription == "" || apiDescription == null) {
+
+        if (apiDescription == "" || apiDescription == null || apiDescription.length() == 0) {
             CardView cv = findViewById(R.id.card_desc);
             cv.setVisibility(View.GONE);
         } else {
