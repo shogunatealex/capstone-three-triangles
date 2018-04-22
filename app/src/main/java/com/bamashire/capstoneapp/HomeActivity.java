@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if(ParseUser.getCurrentUser() == null) {
             ThreeTrianglesApp.mGoogleSignInClient.signOut();
             ActivityUtils.showMainPage(this);
+            BackgroundServiceUtils.stopBackgroundServices(this);
             return;
         }
 
