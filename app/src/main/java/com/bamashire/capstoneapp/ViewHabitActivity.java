@@ -70,13 +70,13 @@ public class ViewHabitActivity extends AppCompatActivity {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = df.format(c.getTime());
 
-                    if (dates == null || dates.size() == 0) {
+                    if (dates == null || dates.size() == 0 && ((int) habit.get("perDayCount"))==1) {
                         habit.increment("streak");
                         habit.add("history", formattedDate);
                         Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                    } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
-                        Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
+                    } else if (checkInDateRange()) {
+                        Snackbar.make(view, "You have already checked in.", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     } else {
                         habit.increment("streak");
@@ -98,6 +98,37 @@ public class ViewHabitActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         calendarChange();
+    }
+    public boolean checkInDateRange(){
+        ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        Log.i("test", ""+habit.get("perDayCount"));
+
+
+        //day
+        if(habit.getString("frequency").equals("Daily") && ((int) habit.get("perDayCount"))==1){
+            return dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0]);
+        }else{
+            int counter = 0;
+            int i = 0;
+            while(i< dates.size() -1 && dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
+                if(dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
+                    counter++;
+                    if(counter >= (Integer.parseInt(habit.get("perDayCount").toString()))-1){
+                        return true;
+                    }
+                }
+                i++;
+            }
+        }
+        return false;
+    }
+    public boolean isWeekend(){
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
+                c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ;
     }
     public void callApi(){
         LockQuery = true;
@@ -181,7 +212,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         ArrayList<String> history = (ArrayList<String>) habit.get("history");
 
         //TODO This crashes the app with a null pointer exception when you have zero checkins.
-        Log.d("HISTORY", history.toString());
+//        Log.d("HISTORY", history.toString());
     }
 
     private void populateData() {
