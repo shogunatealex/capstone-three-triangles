@@ -160,7 +160,13 @@ public class ViewHabitActivity extends AppCompatActivity {
                     int i = Integer.parseInt(habit.get("streak").toString());
                     int resId;
                     String packageName = getPackageName();
-                    resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+                    if (i <=90) {
+                        resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+                    }
+                    else {
+                        resId = getResources().getIdentifier("triangle" + 90, "drawable", packageName);
+                    }
+
                     ThreeTriangleButtons.setImageResource(resId);
 
                 }
