@@ -73,8 +73,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setTitle("Main Page");
         setContentView(R.layout.activity_home);
-        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setViewForPopups(findViewById(android.R.id.content));
-        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setGravityForPopups(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        if (account != null){
+            Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setViewForPopups(findViewById(android.R.id.content));
+            Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setGravityForPopups(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(ParseUser.getCurrentUser() == null) {
