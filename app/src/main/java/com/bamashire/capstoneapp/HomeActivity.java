@@ -9,7 +9,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,11 +35,16 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,6 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fabSettings;
     private LinearLayout layoutFabCustom;
     private LinearLayout layoutFabPremade;
+    private GoogleSignInAccount account;
 
     private void addHabit(){
         //myDataset.add(new Habit(habitName));
@@ -60,14 +69,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        account = GoogleSignIn.getLastSignedInAccount(this);
         super.onCreate(savedInstanceState);
         setTitle("Main Page");
         setContentView(R.layout.activity_home);
+        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setViewForPopups(findViewById(android.R.id.content));
+        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setGravityForPopups(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(ParseUser.getCurrentUser() == null) {
             ThreeTrianglesApp.mGoogleSignInClient.signOut();
             ActivityUtils.showMainPage(this);
+            BackgroundServiceUtils.stopBackgroundServices(this);
             return;
         }
 
@@ -178,14 +191,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 String formattedDate = df.format(c.getTime());
 
                 if (dates == null || dates.size() == 0) {
+                    if(account != null){
+                        incrementCheckinAchievements();
+                    }
                     habit.increment("streak");
                     habit.add("history", formattedDate);
                     Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
+                } else if (checkInDateRange(habit)) {
                     Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
+                    if(account != null){
+                        incrementCheckinAchievements();
+                    }
                     habit.increment("streak");
                     habit.add("history", formattedDate);
                     Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
@@ -201,7 +220,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getHabitsFromDb();
                 homeAdapter.notifyItemRangeChanged(position, homeAdapter.getItemCount());
             }
+            public boolean checkInDateRange(ParseObject habit){
+                ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = df.format(c.getTime());
+                Log.i("test", ""+habit.get("perDayCount"));
+
+
+                //day
+                if(habit.getString("frequency").equals("Daily") && ((int) habit.get("perDayCount"))==1){
+                    return dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0]);
+                }else{
+                    int counter = 0;
+                    int i = 0;
+                    while(i< dates.size() -1 && dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
+                        if(dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
+                            counter++;
+                            if(counter >= (Integer.parseInt(habit.get("perDayCount").toString()))-1){
+                                return true;
+                            }
+                        }
+                        i++;
+                    }
+                }
+                return false;
+            }
         });
+
 
         itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(homeRecyclerView);
@@ -244,9 +290,49 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void done(List<ParseObject> objects, ParseException e) {
 
                 if (objects != null){
-                    for(ParseObject object: objects){
-                        Log.d("succesfull querry", "done: "+ object.getString("habitName"));
-                        addNewHabit(object);
+                    for(ParseObject habit: objects){
+                        Log.d("succesfull querry", "done: "+ habit.getString("habitName"));
+
+                        ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                        try {
+                            if(!DateUtils.isToday(Preferences.getKeyNotificationMissedCheck().getTime())) {
+                                String currentDateString = df.format(c.getTime());
+                                Date currentDate = df.parse(currentDateString);
+                                Date oldDate = df.parse(dates.get(dates.size() - 1));
+
+                                long diff = currentDate.getTime() - oldDate.getTime();
+
+                                Log.d("DATE", currentDate.toString());
+                                Log.d("DATE", oldDate.toString());
+                                Log.d("DATE", Long.toString(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)));
+                                Log.d("DATE", Preferences.getKeyNotificationMissedCheck().toString());
+
+                                if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >= 2) {
+                                    Log.d("TES", Integer.toString(habit.getInt("streak") / 2));
+                                    Preferences.setKeyNotificationsMissedCheck(currentDate);
+                                    habit.put("streak", habit.getInt("streak") / 2);
+                                    habit.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException ex) {
+                                            if (ex == null) {
+                                                Log.i("Parse Result", "Successful!");
+                                            } else {
+                                                Log.i("Parse Result", "Failed" + ex.toString());
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
+                        } catch (java.text.ParseException jpe) {
+
+                        } catch (NullPointerException ne) {
+                            ne.printStackTrace();
+                        }
+                        addNewHabit(habit);
                     }
                 }
 
@@ -271,10 +357,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        GoogleSignInAccount x = GoogleSignIn.getLastSignedInAccount(this);
         if (id == R.id.nav_manage) {
             ActivityUtils.showUserSettings(mParent);
         } else if (id == R.id.nav_share) {
+
 
         }
         else if (id == R.id.nav_achieve){
@@ -323,5 +410,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void incrementCheckinAchievements(){
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBA",1);
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBQ",1);
     }
 }

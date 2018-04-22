@@ -6,10 +6,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/title_activity_settings" />
-        <item
         android:id="@+id/nav_achieve"
         android:icon="@android:drawable/btn_star_big_on"
         android:title="Achievements" />
@@ -17,10 +13,6 @@
 
     <item android:title="Test">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
             <item
                 android:id="@+id/nav_sign_out"
                 android:title="Sign Out" />

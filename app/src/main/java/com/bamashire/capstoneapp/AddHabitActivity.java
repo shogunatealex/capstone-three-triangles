@@ -1,6 +1,7 @@
 package com.bamashire.capstoneapp;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.games.Games;
 
 import com.parse.FindCallback;
@@ -45,11 +47,14 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     ArrayAdapter<String> freqAdapter;
     ParseQuery<ParseObject> query = ParseQuery.getQuery("Habit");
     public static final String EXTRA_MESSAGE = "habit";
-
+    private GoogleSignInAccount account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
+        account = GoogleSignIn.getLastSignedInAccount(this);
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAQ");
 
         //Frequency spinner setup
         freqDropdown = findViewById(R.id.FrequencySpinner);
@@ -176,8 +181,10 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                             habit.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException ex) {
-                                    if (ex == null) {
-//                                        unlockFirstAchievement();
+
+                                    if (ex == null){
+
+
                                         setResult(RESULT_OK, intent);
                                         Log.i("Parse Result", "Successful!");
                                     } else {
@@ -202,6 +209,11 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                     public void done(ParseException ex) {
                         if (ex == null) {
                             setResult(RESULT_OK, intent);
+                            if(account != null){
+                                unlockFirstAchievement();
+                                incrementAchievement();
+                            }
+
                             Log.i("Parse Result", "Successful!");
                         } else {
                             Log.i("Parse Result", "Failed" + ex.toString());
@@ -218,19 +230,13 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
     }
 
     public void unlockFirstAchievement(){
-        AchievementData data = new AchievementData();
-        data.setTitle("Made your first achievement!");
-        data.setTextColor(123456);
-        data.setIconBackgroundColor(21364);
-        data.setBackgroundColor(468136);
-        data.setPopUpOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        ThreeTrianglesApp.achievementInfo.show(data);
+        Log.d("TAGSE", "unlockFirstAchievement: here1");
+//        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setViewForPopups(this.findViewById(R.layout.activity_home));
         Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAQ");
+    }
+    public void incrementAchievement(){
+        Log.d("TAGSE", "unlockFirstAchievement: here2");
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQAg",1);
     }
 
     @Override
