@@ -53,9 +53,7 @@ public class ThreeTrianglesApp extends Application {
         achievementInfo = new AchievementUnlocked(this);
         achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
 
-        List premadeList = new ArrayList();
-        premadeList = makeList(0,0,1);
-        presetHabits.put("key", premadeList);
+        presetHabits.put("Eat More Fruit", makeList(0,0,2));
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
                 .requestEmail()
@@ -97,6 +95,10 @@ public class ThreeTrianglesApp extends Application {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public Map<String, List<Integer>> getPresetHabits(){
+        return presetHabits;
     }
 
     private List makeList(Integer a, Integer b, Integer c)

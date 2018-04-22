@@ -33,6 +33,7 @@ import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class AddHabitActivity extends AppCompatActivity implements OnItemSelectedListener {
@@ -53,19 +54,6 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
-        if(getIntent().getStringExtra("myhabitName") != null){
-            habitID = getIntent().getStringExtra("myhabitID");
-            setTitle(getIntent().getStringExtra("myhabitName"));
-            EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
-            habitText.setText(getIntent().getStringExtra("myhabitName"));
-            EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
-            countText.setText(getIntent().getStringExtra("perDayCount"));
-            EditText editTextDescription = (EditText) findViewById(R.id.EditTextDescription);
-            editTextDescription.setText(getIntent().getStringExtra("description"));
-        }else{
-            setTitle("Create Habit");
-        }
-
         //Frequency spinner setup
         freqDropdown = findViewById(R.id.FrequencySpinner);
         String[] freqItems = new String[]{"Daily", "Every other day", "Weekdays", "Weekends", "Frequency per week"};
@@ -85,15 +73,38 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         ArrayAdapter<String> countAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countItems);
         countDropdown.setAdapter(countAdapter);
         countDropdown.setOnItemSelectedListener(this);
-        if(getIntent().getStringExtra("myhabitID") != null) {
-            String freq = getIntent().getStringExtra("freq");
-            int spinnerPosition = freqAdapter.getPosition(freq);
-            freqDropdown.setSelection(spinnerPosition);
-         }
-        if(getIntent().getStringExtra("myhabitID") != null) {
-            String freq = getIntent().getStringExtra("freq");
-            int spinnerPosition = freqAdapter.getPosition(freq);
-            freqDropdown.setSelection(spinnerPosition);
+
+
+        if(getIntent().getStringExtra("myhabitName") != null){
+            habitID = getIntent().getStringExtra("myhabitID");
+            String habitName = getIntent().getStringExtra("myhabitName");
+            setTitle(getIntent().getStringExtra("myhabitName"));
+            EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
+            habitText.setText(getIntent().getStringExtra("myhabitName"));
+            EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
+            EditText editTextDescription = (EditText) findViewById(R.id.EditTextDescription);
+
+            //PreMade activity intent
+            if(getIntent().getStringExtra("preMade") != null){
+                Map<String, List<Integer>> presetHabits = ((ThreeTrianglesApp) this.getApplication()).getPresetHabits();
+                freqDropdown.setSelection(presetHabits.get(habitName).get(0));
+                timesPerDropdown.setSelection(presetHabits.get(habitName).get(1));
+                countText.setText(presetHabits.get(habitName).get(2).toString());
+            }
+
+            //Comes from HomeActivity
+            else{
+                countText.setText(getIntent().getStringExtra("perDayCount"));
+                editTextDescription.setText(getIntent().getStringExtra("description"));
+                if(getIntent().getStringExtra("myhabitID") != null) {
+                    String freq = getIntent().getStringExtra("freq");
+                    int spinnerPosition = freqAdapter.getPosition(freq);
+                    freqDropdown.setSelection(spinnerPosition);
+                }
+            }
+
+        }else{
+            setTitle("Create Habit");
         }
     }
 
