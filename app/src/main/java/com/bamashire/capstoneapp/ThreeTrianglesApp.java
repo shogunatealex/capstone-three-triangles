@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.AchievementsClient;
+import com.google.android.gms.games.Games;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseUser;
@@ -50,8 +51,8 @@ public class ThreeTrianglesApp extends Application {
     public void onCreate() {
         super.onCreate();
         Preferences.initiatePreferences(this);
-        achievementInfo = new AchievementUnlocked(this);
-        achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
+
+
 
         presetHabits.put("Dust",makeList(4,1,1));
         presetHabits.put("Vaccum",makeList(4,1,1));
@@ -79,6 +80,7 @@ public class ThreeTrianglesApp extends Application {
                 .requestId()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 
