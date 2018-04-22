@@ -2,6 +2,7 @@ package com.bamashire.capstoneapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -25,9 +26,9 @@ public class CheckInReminderPostNotificationService extends LongRunService {
 
         Date date = new Date();
         Date lastNotify = Preferences.getKeyNotificationLastDate();
-
+        Log.d("Tag", "onStartImpl: ");
         if (lastNotify.before(date)){
-            NotificationUtils.postServiceReminders(this, CHECKIN_ID, "Practice Notification", "This is a practice notification");
+            NotificationUtils.postServiceReminders(this, CHECKIN_ID, "Check-In", "Remember to Check in for your habits!" );
             Preferences.setKeyNotificationsLastDate(new Date());
         }
 

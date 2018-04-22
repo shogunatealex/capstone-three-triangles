@@ -23,7 +23,7 @@ public class ServiceReminderPostNotificationServiceInfo extends AbstractServiceI
     }
 
     public long getExecutionFrequencyMS(Context context) {
-        return AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+        return 1 * 1000;
     }
 
     protected long getFirstEverExecutionTimeMS() {
