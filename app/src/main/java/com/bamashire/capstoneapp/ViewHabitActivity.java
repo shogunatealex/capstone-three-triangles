@@ -257,15 +257,28 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         String apiDescription = habit.getString("description");
+        String apiFrequency = habit.getString("frequency");
 
-        if (apiDescription == "" || apiDescription == null || apiDescription.length() == 0) {
+        if (apiDescription.equals("") || apiDescription == null || apiDescription.length() == 0) {
             CardView cv = findViewById(R.id.card_desc);
             cv.setVisibility(View.GONE);
         } else {
             description.setText(habit.getString("description"));
         }
+
+        Log.d("FReQ", apiFrequency);
+        if (apiFrequency.equals("Daily")) {
+            frequency.setText("You are expected to check in daily.");
+        } else if (apiFrequency.equals("Every other day")) {
+            frequency.setText("You are expected to check in every other day.");
+        } else if (apiFrequency.equals("Weekdays")) {
+            frequency.setText("You are expected to check in on weekdays.");
+        } else if (apiFrequency.equals("Weekends")) {
+            frequency.setText("You are expected to check in on weekends.");
+        } else if (apiFrequency.equals("Frequency per week")) {
+            frequency.setText("You are expected to check in " + habit.getString("perDayCount") + " times a week.");
+        }
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
-        frequency.setText("You are expected to check in " + habit.getString("frequency"));
     }
 
 }
