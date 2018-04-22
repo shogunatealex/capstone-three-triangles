@@ -1,16 +1,11 @@
 package com.bamashire.capstoneapp;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,27 +19,13 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
-
-import com.db.chart.animation.Animation;
-import com.db.chart.model.BarSet;
-import com.db.chart.model.LineSet;
-import com.db.chart.renderer.XRenderer;
-import com.db.chart.renderer.YRenderer;
-import com.db.chart.tooltip.Tooltip;
-import com.db.chart.view.BarChartView;
-import com.db.chart.view.LineChartView;
-
-import static java.lang.Thread.sleep;
 
 public class ViewHabitActivity extends AppCompatActivity {
 
@@ -68,6 +49,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Initializes the floating action button to check in to a activity when clicked
                 if (!LockQuery){
                     ArrayList<String> dates = (ArrayList<String>) habit.get("history");
                     Calendar c = Calendar.getInstance();
@@ -130,6 +112,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         });
     }
 
+    //Sets up the calendar in the view habit to show check in history
     public void calendarChange() {
         CalendarView cv = findViewById(R.id.calendar);
         TextView datetext = findViewById(R.id.calendar_date);
@@ -166,6 +149,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //Creates a click listener to update the text views to the selected date
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 String dateCurrent = Integer.toString(year) + "-" + Integer.toString(month + 1) + "-" + Integer.toString(dayOfMonth);
@@ -199,6 +183,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         });
     }
 
+    //Returns the check in history for a specific date
     public ArrayList<String> getCheckInHistory(String date) {
         ArrayList<String> dates = new ArrayList<String>();
         if (history != null) {
@@ -237,7 +222,6 @@ public class ViewHabitActivity extends AppCompatActivity {
             i.putExtra("perDayCount", Integer.toString((Integer) habit.get("perDayCount")));
 
             i.putExtra("history", (Serializable) habit.get("history"));
-            Log.i("history",habit.get("history").toString());
 
             this.startActivity(i);
             return true;
@@ -250,6 +234,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Handles populating the text views in the view habit to the specific habit's data
     private void populateData() {
         TextView description = (TextView) findViewById(R.id.habit_description);
         TextView streak = (TextView) findViewById(R.id.habit_streak);
@@ -266,7 +251,6 @@ public class ViewHabitActivity extends AppCompatActivity {
             description.setText(habit.getString("description"));
         }
 
-        Log.d("FReQ", apiFrequency);
         if (apiFrequency.equals("Daily")) {
             frequency.setText("You are expected to check in daily.");
         } else if (apiFrequency.equals("Every other day")) {
