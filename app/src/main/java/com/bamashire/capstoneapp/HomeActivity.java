@@ -182,7 +182,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     habit.add("history", formattedDate);
                     Snackbar.make(view, "You have checked in with " + habit.getString("habitName"), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                } else if (dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0])) {
+                } else if (checkInDateRange(habit)) {
                     Snackbar.make(view, "You have already checked in today.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
@@ -201,7 +201,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getHabitsFromDb();
                 homeAdapter.notifyItemRangeChanged(position, homeAdapter.getItemCount());
             }
+            public boolean checkInDateRange(ParseObject habit){
+                ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = df.format(c.getTime());
+                Log.i("test", ""+habit.get("perDayCount"));
+
+
+                //day
+                if(habit.getString("frequency").equals("Daily") && ((int) habit.get("perDayCount"))==1){
+                    return dates.get(dates.size() - 1).split(" ")[0].equals(formattedDate.split(" ")[0]);
+                }else{
+                    int counter = 0;
+                    int i = 0;
+                    while(i< dates.size() -1 && dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
+                        if(dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
+                            counter++;
+                            if(counter >= (Integer.parseInt(habit.get("perDayCount").toString()))-1){
+                                return true;
+                            }
+                        }
+                        i++;
+                    }
+                }
+                return false;
+            }
         });
+
 
         itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(homeRecyclerView);
