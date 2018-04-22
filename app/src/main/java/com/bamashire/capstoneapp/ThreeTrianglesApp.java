@@ -57,6 +57,28 @@ public class ThreeTrianglesApp extends Application {
         premadeList = makeList(0,0,1);
         presetHabits.put("key", premadeList);
 
+
+        presetHabits.put("DUST",makeList(4,0,1));
+        presetHabits.put("VACCUM",makeList(4,0,1));
+        presetHabits.put("MEDITATE",makeList(4,0,1));
+        presetHabits.put("CALL FRIEND",makeList(4,0,1));
+        presetHabits.put("PLAY INSTRUMENT",makeList(4,0,1));
+        presetHabits.put("READ",makeList(1,1,30));
+        presetHabits.put("YOGA",makeList(1,1,45));
+        presetHabits.put("RUN",makeList(1,1,45));
+        presetHabits.put("GET 10,000 STEPS",makeList(0,0,1));
+        presetHabits.put("EXCERCISE",makeList(0,0,1));
+        presetHabits.put("WAKE UP EARLY",makeList(0,0,1));
+        presetHabits.put("8 HOURS OF SLEEP",makeList(0,0,1));
+        presetHabits.put("NO ALCHOHOL",makeList(0,0,1));
+        presetHabits.put("QUIT SMOKING",makeList(0,0,1));
+        presetHabits.put("NO CAFFEINE",makeList(0,0,1));
+        presetHabits.put("DRINK MORE WATER",makeList(0,0,1));
+        presetHabits.put("TAKE MULTIVITAMIN",makeList(0,0,1));
+        presetHabits.put("EAT BREAKFAST",makeList(0,0,1));
+        presetHabits.put("EAT MORE VEGGIES",makeList(0,0,1));
+        presetHabits.put("EAT MORE FRUIT",makeList(0,0,1));
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
                 .requestEmail()
                 .requestId()
