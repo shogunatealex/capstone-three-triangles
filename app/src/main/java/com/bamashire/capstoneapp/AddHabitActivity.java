@@ -71,7 +71,6 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
 
         //Either premade habit or an already created habit
         if(getIntent().getStringExtra("myhabitName") != null){
-            System.out.println("MADE IT HERE");
             habitID = getIntent().getStringExtra("myhabitID");
             String habitName = getIntent().getStringExtra("myhabitName");
             setTitle(habitName);
@@ -79,13 +78,15 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
             habitText.setText(habitName);
             EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
             EditText editTextDescription = (EditText) findViewById(R.id.EditTextDescription);
+            Spinner timesPerWeekSpinner = findViewById(R.id.TimesPerWeekSpinner);
+            Spinner freqSpinner = findViewById(R.id.FrequencySpinner);
 
             //PreMade activity intent
             if(getIntent().getStringExtra("preMade") != null){
                 Map<String, List<Integer>> presetHabits = ((ThreeTrianglesApp) this.getApplication()).getPresetHabits();
                 freqDropdown.setSelection(presetHabits.get(habitName).get(0));
                 if(presetHabits.get(habitName).get(0) == 4) {
-                    findViewById(R.id.TimesPerWeekSpinner).setVisibility(View.VISIBLE);
+                    timesPerWeekSpinner.setVisibility(View.VISIBLE);
                     timesPerDropdown.setSelection(presetHabits.get(habitName).get(1));
                 }
                 countText.setText(presetHabits.get(habitName).get(2).toString());
@@ -93,14 +94,18 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
 
             //Comes from HomeActivity
             else{
-                System.out.println("in the else");
                 countText.setText(getIntent().getStringExtra("perDayCount"));
                 editTextDescription.setText(getIntent().getStringExtra("description"));
-//                if(getIntent().getStringExtra("myhabitID") != null) {
-//                    String freq = getIntent().getStringExtra("freq");
-//                    int spinnerPosition = freqAdapter.getPosition(freq);
-//                    freqDropdown.setSelection(spinnerPosition);
-//                }
+
+                if(getIntent().getStringExtra("myhabitID") != null) {
+                    String freq = getIntent().getStringExtra("freq");
+                    int spinnerPosition = freqAdapter.getPosition(freq);
+                    freqDropdown.setSelection(spinnerPosition);
+                }
+                if(freqDropdown.getSelectedItem().toString().equals("Frequency per week")){
+                    int times = Integer.parseInt(getIntent().getStringExtra("timesPerWeek"));
+                    timesPerDropdown.setSelection(times - 1);
+                }
             }
 
         }else{
@@ -142,15 +147,24 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         EditText habitText = (EditText) findViewById(R.id.EnterHabitNameText);
         EditText countText = (EditText) findViewById(R.id.CountTimesPerDayText);
         EditText editTextDescription = (EditText) findViewById(R.id.EditTextDescription);
+
         if (habitText.getText().toString().matches("")){
             showToast("Please enter a habit name");}
         else if (countText.getText().toString().matches("")){
-            showToast("Please enter a count");}
+            showToast("Please enter 'times per day'");}
         else {
             Intent intent = new Intent(this, HomeActivity.class);
             String habitName = habitText.getText().toString();
             Spinner freqDropdown = findViewById(R.id.FrequencySpinner);
             String spinnerText = freqDropdown.getSelectedItem().toString();
+            String timesPerText;
+            if(spinnerText.equals("Frequency per week")){
+                Spinner timesPerWeekDropdown = findViewById(R.id.TimesPerWeekSpinner);
+                timesPerText = timesPerWeekDropdown.getSelectedItem().toString();
+            }
+            else{
+                timesPerText = "0";
+            }
             if(habitID != null) {
                 query.getInBackground(habitID, new GetCallback<ParseObject>() {
 
@@ -163,6 +177,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                             habit.put("history",getIntent().getSerializableExtra("history"));
                             habit.put("description",editTextDescription.getText().toString());
                             habit.put("perDayCount",Integer.parseInt(countText.getText().toString()));
+                            habit.put("timesPerWeek", timesPerText);
                             habit.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException ex) {
@@ -188,6 +203,7 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                 object.put("ownerID", ParseUser.getCurrentUser().getObjectId());
                 object.put("description",editTextDescription.getText().toString());
                 object.put("perDayCount", Integer.parseInt(countText.getText().toString()));
+                object.put("timesPerWeek", timesPerText);
                 object.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException ex) {
