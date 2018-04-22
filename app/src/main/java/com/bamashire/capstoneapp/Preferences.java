@@ -23,6 +23,7 @@ public final class Preferences {
     };
 
     public static final String KEY_NOTIFICATIONS_LAST_DATE = "three.triangles.notifications.last-date";
+    public static final String KEY_NOTIFICATIONS_MISSED_CHECK = "three.triangles.notifications.missed-check";
 
 
     public static void setKeyNotificationsLastDate(Date lastDate) {
@@ -31,6 +32,14 @@ public final class Preferences {
 
     public static Date getKeyNotificationLastDate() {
         return getDatePreferenceImpl(KEY_NOTIFICATIONS_LAST_DATE);
+    }
+
+    public static void setKeyNotificationsMissedCheck(Date lastDate) {
+        setDatePreferenceImpl(KEY_NOTIFICATIONS_MISSED_CHECK, lastDate);
+    }
+
+    public static Date getKeyNotificationMissedCheck() {
+        return getDatePreferenceImpl(KEY_NOTIFICATIONS_MISSED_CHECK);
     }
 
 
@@ -45,6 +54,10 @@ public final class Preferences {
     public static void createNewPreferences(SharedPreferences preferences, SharedPreferences.Editor editor) {
         if (!preferences.contains(KEY_NOTIFICATIONS_LAST_DATE)){
             editor.putLong(KEY_NOTIFICATIONS_LAST_DATE, new Date().getTime()); // Sets to current time today.
+        }
+
+        if (!preferences.contains(KEY_NOTIFICATIONS_MISSED_CHECK)){
+            editor.putLong(KEY_NOTIFICATIONS_MISSED_CHECK, new Date().getTime()); // Sets to current time today.
         }
     }
 

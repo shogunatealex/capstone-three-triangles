@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -32,11 +33,14 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -244,9 +248,49 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void done(List<ParseObject> objects, ParseException e) {
 
                 if (objects != null){
-                    for(ParseObject object: objects){
-                        Log.d("succesfull querry", "done: "+ object.getString("habitName"));
-                        addNewHabit(object);
+                    for(ParseObject habit: objects){
+                        Log.d("succesfull querry", "done: "+ habit.getString("habitName"));
+
+                        ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                        try {
+                            if(!DateUtils.isToday(Preferences.getKeyNotificationMissedCheck().getTime())) {
+                                String currentDateString = df.format(c.getTime());
+                                Date currentDate = df.parse(currentDateString);
+                                Date oldDate = df.parse(dates.get(dates.size() - 1));
+
+                                long diff = currentDate.getTime() - oldDate.getTime();
+
+                                Log.d("DATE", currentDate.toString());
+                                Log.d("DATE", oldDate.toString());
+                                Log.d("DATE", Long.toString(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)));
+                                Log.d("DATE", Preferences.getKeyNotificationMissedCheck().toString());
+
+                                if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >= 2) {
+                                    Log.d("TES", Integer.toString(habit.getInt("streak") / 2));
+                                    Preferences.setKeyNotificationsMissedCheck(currentDate);
+                                    habit.put("streak", habit.getInt("streak") / 2);
+                                    habit.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException ex) {
+                                            if (ex == null) {
+                                                Log.i("Parse Result", "Successful!");
+                                            } else {
+                                                Log.i("Parse Result", "Failed" + ex.toString());
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
+                        } catch (java.text.ParseException jpe) {
+
+                        } catch (NullPointerException ne) {
+                            ne.printStackTrace();
+                        }
+                        addNewHabit(habit);
                     }
                 }
 

@@ -51,11 +51,12 @@ public class ViewHabitActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Initializes the floating action button to check in to a activity when clicked
                 if (!LockQuery){
-                    ArrayList<String> dates = (ArrayList<String>) habit.get("history");
+                    ArrayList<String> dates = history;
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = df.format(c.getTime());
 
+                    Log.d("DATE", formattedDate);
                     if (dates == null || dates.size() == 0) {
                         habit.increment("streak");
                         habit.add("history", formattedDate);
