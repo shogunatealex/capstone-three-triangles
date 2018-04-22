@@ -3,7 +3,6 @@ package com.bamashire.capstoneapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,9 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout;
@@ -35,8 +32,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,8 +74,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         initRecyclerView();
         BackgroundServiceUtils.startBackgroundServices(this);
 
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
         fabSettings = (FloatingActionButton) this.findViewById(R.id.fabAddHabit);
         layoutFabCustom = (LinearLayout) this.findViewById(R.id.layoutFabCustom);
         layoutFabPremade = (LinearLayout) this.findViewById(R.id.layoutFabPremade);
@@ -102,6 +95,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent (mParent, AddHabitActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 1);
+                closeSubMenusFab();
             }
         });
 
@@ -111,21 +105,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent (mParent, PreMadeHabitActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 1);
+                closeSubMenusFab();
             }
         });
 
         //Only main FAB is visible in the beginning
         closeSubMenusFab();
 
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent (mParent, AddHabitActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivityForResult(intent, 1);
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -163,6 +149,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fabExpanded = true;
     }
 
+    //Initializes the recyclerview
     private void initRecyclerView() {
         //Defining the recyclerview (list of all habits)
         homeRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
@@ -173,6 +160,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         homeAdapter = new HomeAdapter(myDataset, this);
         homeRecyclerView.setAdapter(homeAdapter);
 
+        //Adds swipe actions to each item on the list
         swipeController = new HomeSwipeController(new HomeSwipeControllerActions() {
             @Override
             public void onLeftClicked(int position) {
@@ -251,6 +239,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         query.whereEqualTo("ownerID", ParseUser.getCurrentUser().getObjectId());
+        //Goes through the database, grabs each entry, and stores them in the list for the home adapter to use
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
 
@@ -258,10 +247,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     for(ParseObject object: objects){
                         Log.d("succesfull querry", "done: "+ object.getString("habitName"));
                         addNewHabit(object);
-                        //!!!!!!!!!!!
-                        //THIS IS WHERE YOU MAKE HABITS WITH "OBJECT"
-                        //!!!!!!!!!!!
-                        //!!!!!!!!!!!
                     }
                 }
 
@@ -316,6 +301,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    //Adds the habit to the home adapter list and tells it to refresh
     public void addNewHabit(ParseObject habit){
         myDataset.add(habit);
         homeAdapter.notifyDataSetChanged();

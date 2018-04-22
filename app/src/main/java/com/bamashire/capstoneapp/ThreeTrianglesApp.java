@@ -53,31 +53,26 @@ public class ThreeTrianglesApp extends Application {
         achievementInfo = new AchievementUnlocked(this);
         achievementInfo.setRounded(true).setLarge(true).setTopAligned(true).setDismissible(true);
 
-        List premadeList = new ArrayList();
-        premadeList = makeList(0,0,1);
-        presetHabits.put("key", premadeList);
-
-
-        presetHabits.put("DUST",makeList(4,0,1));
-        presetHabits.put("VACCUM",makeList(4,0,1));
-        presetHabits.put("MEDITATE",makeList(4,0,1));
-        presetHabits.put("CALL FRIEND",makeList(4,0,1));
-        presetHabits.put("PLAY INSTRUMENT",makeList(4,0,1));
-        presetHabits.put("READ",makeList(1,1,30));
-        presetHabits.put("YOGA",makeList(1,1,45));
-        presetHabits.put("RUN",makeList(1,1,45));
-        presetHabits.put("GET 10,000 STEPS",makeList(0,0,1));
-        presetHabits.put("EXCERCISE",makeList(0,0,1));
-        presetHabits.put("WAKE UP EARLY",makeList(0,0,1));
-        presetHabits.put("8 HOURS OF SLEEP",makeList(0,0,1));
-        presetHabits.put("NO ALCHOHOL",makeList(0,0,1));
-        presetHabits.put("QUIT SMOKING",makeList(0,0,1));
-        presetHabits.put("NO CAFFEINE",makeList(0,0,1));
-        presetHabits.put("DRINK MORE WATER",makeList(0,0,1));
-        presetHabits.put("TAKE MULTIVITAMIN",makeList(0,0,1));
-        presetHabits.put("EAT BREAKFAST",makeList(0,0,1));
-        presetHabits.put("EAT MORE VEGGIES",makeList(0,0,1));
-        presetHabits.put("EAT MORE FRUIT",makeList(0,0,1));
+        presetHabits.put("Dust",makeList(4,1,1));
+        presetHabits.put("Vaccum",makeList(4,1,1));
+        presetHabits.put("Meditate",makeList(4,0,1));
+        presetHabits.put("Call Friend",makeList(4,2,1));
+        presetHabits.put("Play Instrument",makeList(4,3,1));
+        presetHabits.put("Read",makeList(1,0,1));
+        presetHabits.put("Yoga",makeList(1,0,1));
+        presetHabits.put("Run",makeList(1,0,1));
+        presetHabits.put("Get 10,000 Steps",makeList(0,0,1));
+        presetHabits.put("Exercise",makeList(0,0,1));
+        presetHabits.put("Wake Up Early",makeList(0,0,1));
+        presetHabits.put("8 Hours Of Sleep",makeList(0,0,1));
+        presetHabits.put("No Alcohol",makeList(0,0,1));
+        presetHabits.put("Quit Smoking",makeList(0,0,1));
+        presetHabits.put("No Caffeine",makeList(0,0,1));
+        presetHabits.put("Drink More Water",makeList(0,0,1));
+        presetHabits.put("Take Multivitamin",makeList(0,0,1));
+        presetHabits.put("Eat Breakfast",makeList(0,0,1));
+        presetHabits.put("Eat More Veggies",makeList(0,0,3));
+        presetHabits.put("Eat More Fruit",makeList(0,0,2));
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN )
                 .requestEmail()
@@ -119,6 +114,10 @@ public class ThreeTrianglesApp extends Application {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public Map<String, List<Integer>> getPresetHabits(){
+        return presetHabits;
     }
 
     private List makeList(Integer a, Integer b, Integer c)
