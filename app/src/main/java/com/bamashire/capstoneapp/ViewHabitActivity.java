@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
+
 import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
 import com.db.chart.model.LineSet;
@@ -48,6 +50,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     private String habitID;
     private ParseObject habit;
     public boolean LockQuery;
+    private ArrayList<String> history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +100,6 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        calendarChange();
     }
     public void callApi(){
         LockQuery = true;
@@ -111,6 +113,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
 
+                    history = (ArrayList<String>) habit.get("history");
+
                     ImageView ThreeTriangleButtons = (findViewById(R.id.ThreeTriangleImage));
                     int i = Integer.parseInt(habit.get("streak").toString());
                     int resId;
@@ -120,7 +124,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                 }
                 populateData();
-                getGraphData();
+                calendarChange();
             }
         });
     }
@@ -128,16 +132,65 @@ public class ViewHabitActivity extends AppCompatActivity {
     public void calendarChange() {
         CalendarView cv = findViewById(R.id.calendar);
         TextView datetext = findViewById(R.id.calendar_date);
+        TextView historytext = findViewById(R.id.calendar_history);
+        SimpleDateFormat date = new SimpleDateFormat("EEEE, MMMM d");
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFull = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        SimpleDateFormat time = new SimpleDateFormat("h:mm aa");
+
         Date d = new Date(cv.getDate());
-        datetext.setText(d.getDay() + " " + d.getMonth() + " " + d.getDate());
+        ArrayList<String> dates = getCheckInHistory(dateF.format(d));
+        if (dates.size() == 0) {
+            historytext.setText("You did not check in on this day");
+        } else {
+            historytext.setText("You checked in at " + dates.toString());
+        }
+        datetext.setText(date.format(d));
+
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                long date = cv.getDate();
-                Date d = new Date(date);
-                Log.d("test", year + Integer.toString(month) + dayOfMonth);
+                String dateCurrent = Integer.toString(year) + "-" + Integer.toString(month + 1) + "-" + Integer.toString(dayOfMonth);
+                try {
+                    Date d = dateF.parse(dateCurrent);
+                    ArrayList<String> dates = getCheckInHistory(dateF.format(d));
+
+                    if (dates.size() == 0) {
+                        historytext.setText("You did not check in on this day");
+                    } else {
+                        String text = "You checked in at ";
+                        int count = 0;
+                        for (String item : dates) {
+                            Date nd = dateFull.parse(item);
+                            if (count == 0) {
+                                text += time.format(nd);
+                            } else if (count >= 1) {
+                                text += ", " + time.format(nd);
+                            }
+                            count++;
+
+                        }
+                        historytext.setText(text);
+
+                    }
+                    datetext.setText(date.format(d));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
+
+    public ArrayList<String> getCheckInHistory(String date) {
+        ArrayList<String> dates = new ArrayList<String>();
+        for (String item: history) {
+            if (item.contains(date)) {
+                dates.add(item);
+            }
+        }
+
+        return dates;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -177,11 +230,6 @@ public class ViewHabitActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getGraphData() {
-        ArrayList<String> history = (ArrayList<String>) habit.get("history");
-
-        Log.d("HISTORY", history.toString());
-    }
 
     private void populateData() {
         TextView description = (TextView) findViewById(R.id.habit_description);
