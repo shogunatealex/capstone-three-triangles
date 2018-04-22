@@ -64,7 +64,7 @@ public class ThreeTrianglesApp extends Application {
         presetHabits.put("Get 10,000 Steps",makeList(0,0,1));
         presetHabits.put("Exercise",makeList(0,0,1));
         presetHabits.put("Wake Up Early",makeList(0,0,1));
-        presetHabits.put("8 Hours Of Sleep",makeList(0,0,1));
+        presetHabits.put("8 Hours of Sleep",makeList(0,0,1));
         presetHabits.put("No Alcohol",makeList(0,0,1));
         presetHabits.put("Quit Smoking",makeList(0,0,1));
         presetHabits.put("No Caffeine",makeList(0,0,1));
