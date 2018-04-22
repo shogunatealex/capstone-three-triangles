@@ -95,6 +95,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent (mParent, AddHabitActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 1);
+                closeSubMenusFab();
             }
         });
 
@@ -104,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent (mParent, PreMadeHabitActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 1);
+                closeSubMenusFab();
             }
         });
 
