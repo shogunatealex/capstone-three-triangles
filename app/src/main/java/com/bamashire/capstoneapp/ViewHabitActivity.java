@@ -8,6 +8,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -138,14 +139,32 @@ public class ViewHabitActivity extends AppCompatActivity {
         SimpleDateFormat dateFull = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
         SimpleDateFormat time = new SimpleDateFormat("h:mm aa");
 
-        Date d = new Date(cv.getDate());
-        ArrayList<String> dates = getCheckInHistory(dateF.format(d));
-        if (dates.size() == 0) {
-            historytext.setText("You did not check in on this day");
-        } else {
-            historytext.setText("You checked in at " + dates.toString());
+        try {
+            Date d = new Date(cv.getDate());
+            ArrayList<String> dates = getCheckInHistory(dateF.format(d));
+
+            if (dates.size() == 0) {
+                historytext.setText("You did not check in on this day");
+            } else {
+                String text = "You checked in at ";
+                int count = 0;
+                for (String item : dates) {
+                    Date nd = dateFull.parse(item);
+                    if (count == 0) {
+                        text += time.format(nd);
+                    } else if (count >= 1) {
+                        text += ", " + time.format(nd);
+                    }
+                    count++;
+
+                }
+                historytext.setText(text);
+
+            }
+            datetext.setText(date.format(d));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
         }
-        datetext.setText(date.format(d));
 
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -182,12 +201,13 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     public ArrayList<String> getCheckInHistory(String date) {
         ArrayList<String> dates = new ArrayList<String>();
-        for (String item: history) {
-            if (item.contains(date)) {
-                dates.add(item);
+        if (history != null) {
+            for (String item: history) {
+                if (item.contains(date)) {
+                    dates.add(item);
+                }
             }
         }
-
         return dates;
     }
 
@@ -235,10 +255,17 @@ public class ViewHabitActivity extends AppCompatActivity {
         TextView streak = (TextView) findViewById(R.id.habit_streak);
         TextView frequency = (TextView) findViewById(R.id.habit_frequency);
 
-        description.setText(habit.getString("description"));
+
+        String apiDescription = habit.getString("description");
+        Log.d("DESC", apiDescription);
+        if (apiDescription == "" || apiDescription == null) {
+            CardView cv = findViewById(R.id.card_desc);
+            cv.setVisibility(View.GONE);
+        } else {
+            description.setText(habit.getString("description"));
+        }
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
         frequency.setText("You are expected to check in " + habit.getString("frequency"));
-        description.setText(habit.getString("description"));
     }
 
 }

@@ -21,8 +21,9 @@
             card_view:cardCornerRadius="3dp"
             card_view:cardElevation="3dp"
             card_view:cardUseCompatPadding="true"
-            android:id="@+id/card_item"
+            android:id="@+id/card_desc"
             android:clickable="true"
+            android:visibility="visible"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
