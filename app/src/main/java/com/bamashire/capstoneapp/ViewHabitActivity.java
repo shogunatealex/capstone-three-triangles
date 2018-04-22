@@ -230,7 +230,6 @@ public class ViewHabitActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     private void populateData() {
         TextView description = (TextView) findViewById(R.id.habit_description);
         TextView streak = (TextView) findViewById(R.id.habit_streak);
