@@ -260,7 +260,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         } else if (apiFrequency.equals("Weekends")) {
             frequency.setText("You are expected to check in on weekends.");
         } else if (apiFrequency.equals("Frequency per week")) {
-            frequency.setText("You are expected to check in " + habit.getString("perDayCount") + " times a week.");
+            frequency.setText("You are expected to check in " + habit.getNumber("perDayCount") + " times a week.");
         }
         streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
     }
