@@ -173,15 +173,82 @@ public class ViewHabitActivity extends AppCompatActivity {
     public void calendarChange() {
         CalendarView cv = findViewById(R.id.calendar);
         TextView datetext = findViewById(R.id.calendar_date);
-        Date d = new Date(cv.getDate());
-        datetext.setText(d.getDay() + " " + d.getMonth() + " " + d.getDate());
+        TextView historytext = findViewById(R.id.calendar_history);
+        SimpleDateFormat date = new SimpleDateFormat("EEEE, MMMM d");
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFull = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        SimpleDateFormat time = new SimpleDateFormat("h:mm aa");
+
+        try {
+            Date d = new Date(cv.getDate());
+            ArrayList<String> dates = getCheckInHistory(dateF.format(d));
+
+            if (dates.size() == 0) {
+                historytext.setText("You did not check in on this day");
+            } else {
+                String text = "You checked in at ";
+                int count = 0;
+                for (String item : dates) {
+                    Date nd = dateFull.parse(item);
+                    if (count == 0) {
+                        text += time.format(nd);
+                    } else if (count >= 1) {
+                        text += ", " + time.format(nd);
+                    }
+                    count++;
+
+                }
+                historytext.setText(text);
+
+            }
+            datetext.setText(date.format(d));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                long date = cv.getDate();
-                Date d = new Date(date);
-                Log.d("test", year + Integer.toString(month) + dayOfMonth);
+                String dateCurrent = Integer.toString(year) + "-" + Integer.toString(month + 1) + "-" + Integer.toString(dayOfMonth);
+                try {
+                    Date d = dateF.parse(dateCurrent);
+                    ArrayList<String> dates = getCheckInHistory(dateF.format(d));
+
+                    if (dates.size() == 0) {
+                        historytext.setText("You did not check in on this day");
+                    } else {
+                        String text = "You checked in at ";
+                        int count = 0;
+                        for (String item : dates) {
+                            Date nd = dateFull.parse(item);
+                            if (count == 0) {
+                                text += time.format(nd);
+                            } else if (count >= 1) {
+                                text += ", " + time.format(nd);
+                            }
+                            count++;
+
+                        }
+                        historytext.setText(text);
+
+                    }
+                    datetext.setText(date.format(d));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
+    }
+
+    public ArrayList<String> getCheckInHistory(String date) {
+        ArrayList<String> dates = new ArrayList<String>();
+        if (history != null) {
+            for (String item: history) {
+                if (item.contains(date)) {
+                    dates.add(item);
+                }
+            }
+        }
+        return dates;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -238,7 +305,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         String apiDescription = habit.getString("description");
         String apiFrequency = habit.getString("frequency");
 
-        if (apiDescription.equals("") || apiDescription == null || apiDescription.length() == 0) {
+        if (apiDescription == null || apiDescription.equals("") || apiDescription.length() == 0) {
             CardView cv = findViewById(R.id.card_desc);
             cv.setVisibility(View.GONE);
         } else {

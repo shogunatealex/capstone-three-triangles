@@ -73,8 +73,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setTitle("Main Page");
         setContentView(R.layout.activity_home);
-        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setViewForPopups(findViewById(android.R.id.content));
-        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setGravityForPopups(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+//        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setViewForPopups(findViewById(android.R.id.content));
+//        Games.getGamesClient(this, GoogleSignIn.getLastSignedInAccount(this)).setGravityForPopups(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(ParseUser.getCurrentUser() == null) {
@@ -358,13 +358,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         GoogleSignInAccount x = GoogleSignIn.getLastSignedInAccount(this);
-        if (id == R.id.nav_manage) {
-            ActivityUtils.showUserSettings(mParent);
-        } else if (id == R.id.nav_share) {
-
-
-        }
-        else if (id == R.id.nav_achieve){
+        if (id == R.id.nav_achieve){
             if(GoogleSignIn.getLastSignedInAccount(this) == null){
                 showToast("You must be logged into Google in order to use this feature");
                 return false;
