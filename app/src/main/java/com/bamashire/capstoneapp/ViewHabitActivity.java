@@ -171,7 +171,6 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                 }
                 populateData();
-                getGraphData();
             }
         });
     }
@@ -296,12 +295,6 @@ public class ViewHabitActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getGraphData() {
-        ArrayList<String> history = (ArrayList<String>) habit.get("history");
-
-        //TODO This crashes the app with a null pointer exception when you have zero checkins.
-//        Log.d("HISTORY", history.toString());
-    }
 
     private void populateData() {
         TextView description = (TextView) findViewById(R.id.habit_description);
