@@ -283,9 +283,8 @@ public class ViewHabitActivity extends AppCompatActivity {
             i.putExtra("streak", Integer.toString((Integer) habit.get("streak")));
             i.putExtra("perDayCount", Integer.toString((Integer) habit.get("perDayCount")));
             i.putExtra("timesPerWeek", habit.getString("timesPerWeek"));
-
             i.putExtra("history", (Serializable) habit.get("history"));
-            Log.i("history",habit.get("history").toString());
+            //Log.i("history",habit.get("history").toString());
 
             this.startActivity(i);
             return true;

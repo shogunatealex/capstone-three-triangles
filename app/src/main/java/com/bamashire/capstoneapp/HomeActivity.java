@@ -314,6 +314,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                                 if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >= 2) {
                                     Log.d("TES", Integer.toString(habit.getInt("streak") / 2));
+                                    if(account != null){
+                                        unlockFailedAchievement();
+                                    }
                                     habit.put("streak", habit.getInt("streak") / 2);
                                     habit.saveInBackground(new SaveCallback() {
                                         @Override
@@ -412,5 +415,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void incrementCheckinAchievements(){
         Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBA",1);
         Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).increment("CgkI0oOo6ZoYEAIQBQ",1);
+    }
+
+    public void unlockFailedAchievement(){
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAw");
     }
 }
