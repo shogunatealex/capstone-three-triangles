@@ -86,13 +86,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Log.d("TEST", Integer.toString(position));
         holder.habit = h;
         holder.txtName.setText(h.getString("habitName"));
-        holder.txtConsecutiveDays.setText(streak + " consecutive days!");
+        holder.txtConsecutiveDays.setText(streak + " consecutive sign ins!");
         holder.txtPercent.setText(String.format("%,.0f%%", streak / .9));
 
         int resId;
         int i = Integer.parseInt(h.get("streak").toString());
         String packageName = home.getPackageName();
-        resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        if (i <= 90){
+            resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        }
+        else {
+            resId = holder.mHome.getResources().getIdentifier("triangle" + 90, "drawable", packageName);
+        }
+
         holder.smallTriangle.setImageResource(resId);
 
     }

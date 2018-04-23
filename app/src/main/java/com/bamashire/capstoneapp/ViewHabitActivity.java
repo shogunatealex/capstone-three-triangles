@@ -156,6 +156,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
 
+                    history = (ArrayList<String>) habit.get("history");
+
                     ImageView ThreeTriangleButtons = (findViewById(R.id.ThreeTriangleImage));
                     int i = Integer.parseInt(habit.get("streak").toString());
                     int resId;
@@ -171,7 +173,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                 }
                 populateData();
-                getGraphData();
+                calendarChange();
             }
         });
     }
@@ -192,15 +194,11 @@ public class ViewHabitActivity extends AppCompatActivity {
             if (dates.size() == 0) {
                 historytext.setText("You did not check in on this day");
             } else {
-                String text = "You checked in at ";
+                String text = "You checked in at:\n";
                 int count = 0;
                 for (String item : dates) {
                     Date nd = dateFull.parse(item);
-                    if (count == 0) {
-                        text += time.format(nd);
-                    } else if (count >= 1) {
-                        text += ", " + time.format(nd);
-                    }
+                    text += time.format(nd) + "\n";
                     count++;
 
                 }
@@ -222,15 +220,11 @@ public class ViewHabitActivity extends AppCompatActivity {
                     if (dates.size() == 0) {
                         historytext.setText("You did not check in on this day");
                     } else {
-                        String text = "You checked in at ";
+                        String text = "You checked in at:\n";
                         int count = 0;
                         for (String item : dates) {
                             Date nd = dateFull.parse(item);
-                            if (count == 0) {
-                                text += time.format(nd);
-                            } else if (count >= 1) {
-                                text += ", " + time.format(nd);
-                            }
+                            text += time.format(nd) + "\n";
                             count++;
 
                         }
@@ -295,12 +289,6 @@ public class ViewHabitActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getGraphData() {
-        ArrayList<String> history = (ArrayList<String>) habit.get("history");
-
-        //TODO This crashes the app with a null pointer exception when you have zero checkins.
-//        Log.d("HISTORY", history.toString());
-    }
 
     private void populateData() {
         TextView description = (TextView) findViewById(R.id.habit_description);
