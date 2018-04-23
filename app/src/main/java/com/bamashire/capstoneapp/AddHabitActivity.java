@@ -170,10 +170,19 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
                     public void done(ParseObject habit, ParseException e) {
                         if (e == null) {
                             habit.put("habitName", habitName);
-                            habit.put("streak", Integer.parseInt(getIntent().getStringExtra("streak")));
+                            if(getIntent().getStringExtra("streak") == null) {
+                                habit.put("streak", 0);
+                            }
+                            else{
+                                habit.put("streak", Integer.parseInt(getIntent().getStringExtra("streak")));
+                            }
                             habit.put("frequency", spinnerText);
                             habit.put("ownerID", ParseUser.getCurrentUser().getObjectId());
-                            habit.put("history",getIntent().getSerializableExtra("history"));
+                            if(getIntent().getSerializableExtra("history") == null) {
+                            }
+                            else {
+                                habit.put("history", getIntent().getSerializableExtra("history"));
+                            }
                             habit.put("description",editTextDescription.getText().toString());
                             habit.put("perDayCount",Integer.parseInt(countText.getText().toString()));
                             habit.put("timesPerWeek", timesPerText);
