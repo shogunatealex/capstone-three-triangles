@@ -92,7 +92,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         int resId;
         int i = Integer.parseInt(h.get("streak").toString());
         String packageName = home.getPackageName();
-        resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        if (i <= 90){
+            resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        }
+        else {
+            resId = holder.mHome.getResources().getIdentifier("triangle" + 90, "drawable", packageName);
+        }
+
         holder.smallTriangle.setImageResource(resId);
 
     }
