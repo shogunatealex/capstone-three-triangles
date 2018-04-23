@@ -194,15 +194,11 @@ public class ViewHabitActivity extends AppCompatActivity {
             if (dates.size() == 0) {
                 historytext.setText("You did not check in on this day");
             } else {
-                String text = "You checked in at ";
+                String text = "You checked in at:\n";
                 int count = 0;
                 for (String item : dates) {
                     Date nd = dateFull.parse(item);
-                    if (count == 0) {
-                        text += time.format(nd);
-                    } else if (count >= 1) {
-                        text += ", " + time.format(nd);
-                    }
+                    text += time.format(nd) + "\n";
                     count++;
 
                 }
@@ -224,15 +220,11 @@ public class ViewHabitActivity extends AppCompatActivity {
                     if (dates.size() == 0) {
                         historytext.setText("You did not check in on this day");
                     } else {
-                        String text = "You checked in at ";
+                        String text = "You checked in at:\n";
                         int count = 0;
                         for (String item : dates) {
                             Date nd = dateFull.parse(item);
-                            if (count == 0) {
-                                text += time.format(nd);
-                            } else if (count >= 1) {
-                                text += ", " + time.format(nd);
-                            }
+                            text += time.format(nd) + "\n";
                             count++;
 
                         }
