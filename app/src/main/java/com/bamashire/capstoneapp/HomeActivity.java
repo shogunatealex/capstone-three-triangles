@@ -314,7 +314,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                                 if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >= 2) {
                                     Log.d("TES", Integer.toString(habit.getInt("streak") / 2));
-                                    Preferences.setKeyNotificationsMissedCheck(currentDate);
                                     habit.put("streak", habit.getInt("streak") / 2);
                                     habit.saveInBackground(new SaveCallback() {
                                         @Override
@@ -336,6 +335,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         }
                         addNewHabit(habit);
                     }
+                    Preferences.setKeyNotificationsMissedCheck(new Date());
+
                 }
 
 
