@@ -156,6 +156,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                     habit = object;
                     Log.d("succesfull querry", "done: "+ object.getString("habitName"));
 
+                    history = (ArrayList<String>) habit.get("history");
+
                     ImageView ThreeTriangleButtons = (findViewById(R.id.ThreeTriangleImage));
                     int i = Integer.parseInt(habit.get("streak").toString());
                     int resId;
@@ -171,6 +173,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                 }
                 populateData();
+                calendarChange();
             }
         });
     }
