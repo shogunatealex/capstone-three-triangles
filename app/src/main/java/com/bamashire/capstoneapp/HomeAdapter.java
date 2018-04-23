@@ -74,7 +74,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v, home);
         return vh;
-        
     }
 
     // Replace the contents of a view (invoked by the layout manager)
