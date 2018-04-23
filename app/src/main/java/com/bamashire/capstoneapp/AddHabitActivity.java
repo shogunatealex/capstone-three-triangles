@@ -54,7 +54,6 @@ public class AddHabitActivity extends AppCompatActivity implements OnItemSelecte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
         account = GoogleSignIn.getLastSignedInAccount(this);
-        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).unlock("CgkI0oOo6ZoYEAIQAQ");
 
         //Frequency spinner setup
         freqDropdown = findViewById(R.id.FrequencySpinner);
