@@ -160,10 +160,12 @@ public class ViewHabitActivity extends AppCompatActivity {
 
                     ImageView ThreeTriangleButtons = (findViewById(R.id.ThreeTriangleImage));
                     int i = Integer.parseInt(habit.get("streak").toString());
+                    int perday = (Integer.parseInt(habit.get("perDayCount").toString()));
+                    int sum = (i/perday);
                     int resId;
                     String packageName = getPackageName();
-                    if (i <=90) {
-                        resId = getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+                    if (sum <=90) {
+                        resId = getResources().getIdentifier("triangle" + String.valueOf(sum), "drawable", packageName);
                     }
                     else {
                         resId = getResources().getIdentifier("triangle" + 90, "drawable", packageName);
@@ -318,7 +320,10 @@ public class ViewHabitActivity extends AppCompatActivity {
         } else if (apiFrequency.equals("Frequency per week")) {
             frequency.setText("You are expected to check in " + habit.getString("timesPerWeek") + " times a week.");
         }
-        streak.setText("Your current streak is " + habit.getNumber("streak") + " days!");
+        int habitStreak = (Integer) habit.get("streak");
+        int perDay = (Integer) habit.get("perDayCount");
+        int sum = habitStreak/perDay;
+        streak.setText("Your current streak is " + Integer.toString(sum) + " days!");
     }
 
     public void incrementCheckinAchievements(){
