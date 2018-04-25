@@ -159,12 +159,12 @@ class HomeSwipeController extends Callback {
         Paint p = new Paint();
 
         RectF leftButton = new RectF(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + buttonWidthWithoutPadding, itemView.getBottom());
-        p.setColor(Color.RED);
+        p.setColor(Color.parseColor("#EE6352"));
         c.drawRoundRect(leftButton, corners, corners, p);
         drawText("Delete", c, leftButton, p);
 
         RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop(), itemView.getRight(), itemView.getBottom());
-        p.setColor(Color.parseColor("#3fb737"));
+        p.setColor(Color.parseColor("#ADC26A"));
         c.drawRoundRect(rightButton, corners, corners, p);
         drawText("Check In", c, rightButton, p);
 
