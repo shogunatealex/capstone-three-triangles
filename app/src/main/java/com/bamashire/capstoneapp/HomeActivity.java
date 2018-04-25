@@ -239,7 +239,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     while(i< dates.size() -1 && dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
                         if(dates.get(dates.size() - i-1).split(" ")[0].equals(formattedDate.split(" ")[0])){
                             counter++;
-                            if(counter >= (Integer.parseInt(habit.get("perDayCount").toString()))-1){
+                            if(counter > (Integer.parseInt(habit.get("perDayCount").toString()))){
                                 return true;
                             }
                         }
