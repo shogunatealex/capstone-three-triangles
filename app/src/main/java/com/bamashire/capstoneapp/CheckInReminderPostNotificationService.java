@@ -28,7 +28,7 @@ public class CheckInReminderPostNotificationService extends LongRunService {
         Date lastNotify = Preferences.getKeyNotificationLastDate();
         Log.d("Tag", "onStartImpl: ");
         if (lastNotify.before(date)){
-            NotificationUtils.postServiceReminders(this, CHECKIN_ID, "Check-In", "Remember to Check in for your habits!" );
+            NotificationUtils.postServiceReminders(this, CHECKIN_ID, "Check-In", "Remember to Check-In for your habits!" );
             Preferences.setKeyNotificationsLastDate(new Date());
         }
 

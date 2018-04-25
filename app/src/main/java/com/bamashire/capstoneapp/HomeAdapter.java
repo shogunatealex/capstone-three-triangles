@@ -83,17 +83,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         final ParseObject h = habits.get(position);
         int streak = (Integer) h.get("streak");
+        int perDay = (Integer) h.get("perDayCount");
+        int sum = streak/perDay;
         Log.d("TEST", Integer.toString(position));
         holder.habit = h;
         holder.txtName.setText(h.getString("habitName"));
-        holder.txtConsecutiveDays.setText(streak + " consecutive sign ins!");
-        holder.txtPercent.setText(String.format("%,.0f%%", streak / .9));
+        holder.txtConsecutiveDays.setText(sum + " consecutive day check ins!");
+        holder.txtPercent.setText(String.format("%,.0f%%", sum / .9));
 
         int resId;
-        int i = Integer.parseInt(h.get("streak").toString());
         String packageName = home.getPackageName();
-        if (i <= 90){
-            resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(i), "drawable", packageName);
+        if (sum <= 90){
+            resId = holder.mHome.getResources().getIdentifier("triangle" + String.valueOf(sum), "drawable", packageName);
         }
         else {
             resId = holder.mHome.getResources().getIdentifier("triangle" + 90, "drawable", packageName);
