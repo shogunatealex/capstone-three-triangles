@@ -323,7 +323,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         int habitStreak = (Integer) habit.get("streak");
         int perDay = (Integer) habit.get("perDayCount");
         int sum = habitStreak/perDay;
-        streak.setText("Your current streak is " + Integer.toString(sum) + " days!");
+        if(sum == 1)
+            streak.setText("Your current streak is " + Integer.toString(sum) + " day!");
+        else
+            streak.setText("Your current streak is " + Integer.toString(sum) + " days!");
+
     }
 
     public void incrementCheckinAchievements(){
