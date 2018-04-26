@@ -83,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             ThreeTrianglesApp.mGoogleSignInClient.signOut();
             ActivityUtils.showMainPage(this);
             BackgroundServiceUtils.stopBackgroundServices(this);
+            finish();
             return;
         }
 
@@ -265,6 +266,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(ParseUser.getCurrentUser() == null) {
+            ThreeTrianglesApp.mGoogleSignInClient.signOut();
+            ActivityUtils.showMainPage(this);
+            BackgroundServiceUtils.stopBackgroundServices(this);
+            finish();
+            return;
+        }
         ThreeTrianglesApp.mGoogleSignInClient.silentSignIn();
         getHabitsFromDb();
         if (homeAdapter != null){
